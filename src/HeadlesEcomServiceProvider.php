@@ -21,7 +21,7 @@ class HeadlesEcomServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                                 __DIR__.'/../config/config.php' => config_path('headles-ecom.php'),
+                                 __DIR__.'/../config/config.php' => config_path('headless-ecom.php'),
             ], 'config');
 
             // Publishing the views.

@@ -16,8 +16,15 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "illuminate/support": "^8.0"
+        "php": "^8.2",
+        "ext-bcmath": "*",
+        "ext-exif": "*",
+        "ext-intl": "*",
+        "laravel/framework": "^10.0",
+        "spatie/laravel-medialibrary": "^11.0.0",
+        "spatie/laravel-activitylog": "^4.7",
+        "laravel/scout": "^10.0",
+        "cartalyst/converter": "^7.0|^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
@@ -25,7 +32,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Chasie\\HeadlesEcom\\": "src"
+            "Chasie\\HeadlesEcom\\": "src",
+            "Chasie\\HeadlesEcom\\Database\\Factories\\": "database/factories",
+            "Chasie\\HeadlesEcom\\Database\\Seeders\\": "database/seeders",
+            "Chasie\\HeadlesEcom\\Database\\State\\": "database/state"
         }
     },
     "autoload-dev": {
