@@ -54,7 +54,7 @@ class AttributeGroup extends BaseModel
     /**
      * Return the attributes relationship.
      *
-     * @return HasMany
+     * @return HasMany<Attribute>
      */
     public function attributes(): HasMany
     {

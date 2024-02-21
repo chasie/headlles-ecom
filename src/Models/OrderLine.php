@@ -10,6 +10,9 @@ use HeadlessEcom\Base\Casts\TaxBreakdown;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Database\Factories\OrderLineFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int $id
@@ -75,7 +78,7 @@ class OrderLine extends BaseModel
     /**
      * Return the order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Order>
      */
     public function order(): BelongsTo
     {
@@ -85,7 +88,7 @@ class OrderLine extends BaseModel
     /**
      * Return the polymorphic relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function purchasable(): MorphTo
     {
@@ -95,7 +98,7 @@ class OrderLine extends BaseModel
     /**
      * Return the currency relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     * @return HasOneThrough<Currency>
      */
     public function currency(): HasOneThrough
     {

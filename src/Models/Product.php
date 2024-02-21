@@ -4,8 +4,11 @@ namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Casts\AsAttributeData;
@@ -90,7 +93,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the product type relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<ProductType>
      */
     public function productType(): BelongsTo
     {
@@ -100,7 +103,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the product images relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function images(): MorphMany
     {
@@ -110,7 +113,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the product variants relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<ProductVariant>
      */
     public function variants(): HasMany
     {
@@ -120,7 +123,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the product collections relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany<Collection>
      */
     public function collections(): BelongsToMany
     {
@@ -142,7 +145,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the associations relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<ProductAssociation>
      */
     public function associations(): HasMany
     {
@@ -152,7 +155,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the associations relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<ProductAssociation>
      */
     public function inverseAssociations(): HasMany
     {
@@ -166,7 +169,7 @@ class Product extends BaseModel implements SpatieHasMedia
      * @param  string  $type
      * @return void
      */
-    public function associate($product, $type)
+    public function associate(mixed $product, string $type): void
     {
         Associate::dispatch($this, $product, $type);
     }
@@ -175,16 +178,18 @@ class Product extends BaseModel implements SpatieHasMedia
      * Dissociate a product to another with a type.
      *
      * @param  mixed  $product
-     * @param  string  $type
+     * @param  null|string  $type
      * @return void
      */
-    public function dissociate($product, $type = null)
+    public function dissociate(mixed $product, ?string $type = null): void
     {
         Dissociate::dispatch($this, $product, $type);
     }
 
     /**
      * Return the customer groups relationship.
+     *
+     * @return BelongsToMany<CustomerGroup>
      */
     public function customerGroups(): BelongsToMany
     {
@@ -210,7 +215,7 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the brand relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Brand>
      */
     public function brand(): BelongsTo
     {
@@ -220,10 +225,11 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Apply the status scope.
      *
+     * @param  Builder  $query
      * @param  string  $status
      * @return Builder
      */
-    public function scopeStatus(Builder $query, $status): Builder
+    public function scopeStatus(Builder $query, string $status): Builder
     {
         return $query->whereStatus($status);
     }
@@ -231,9 +237,9 @@ class Product extends BaseModel implements SpatieHasMedia
     /**
      * Return the prices relationship.
      *
-     * @return HasManyThrough
+     * @return HasManyThrough<Price>
      */
-    public function prices()
+    public function prices(): HasManyThrough
     {
         return $this
             ->hasManyThrough(

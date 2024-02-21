@@ -14,6 +14,9 @@ use HeadlessEcom\Base\Traits\HasTags;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Base\Traits\Searchable;
 use HeadlessEcom\Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -84,7 +87,7 @@ class Order extends BaseModel
      *
      * @return string
      */
-    public function getStatusLabelAttribute()
+    public function getStatusLabelAttribute(): string
     {
         $statuses = config('headless-ecom.orders.statuses');
 
@@ -94,7 +97,7 @@ class Order extends BaseModel
     /**
      * Return the channel relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Channel>
      */
     public function channel(): BelongsTo
     {
@@ -104,7 +107,7 @@ class Order extends BaseModel
     /**
      * Return the cart relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Cart>
      */
     public function cart(): BelongsTo
     {
@@ -114,9 +117,9 @@ class Order extends BaseModel
     /**
      * Return the lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderLine>
      */
-    public function lines(): BelongsTo
+    public function lines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
     }
@@ -124,7 +127,7 @@ class Order extends BaseModel
     /**
      * Return physical product lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderLine>
      */
     public function physicalLines(): HasMany
     {
@@ -134,7 +137,7 @@ class Order extends BaseModel
     /**
      * Return digital product lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderLine>
      */
     public function digitalLines(): HasMany
     {
@@ -144,7 +147,7 @@ class Order extends BaseModel
     /**
      * Return shipping lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderLine>
      */
     public function shippingLines(): HasMany
     {
@@ -154,7 +157,7 @@ class Order extends BaseModel
     /**
      * Return product lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderLine>
      */
     public function productLines(): HasMany
     {
@@ -164,7 +167,7 @@ class Order extends BaseModel
     /**
      * Return the currency relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Currency>
      */
     public function currency(): BelongsTo
     {
@@ -174,7 +177,7 @@ class Order extends BaseModel
     /**
      * Return the addresses relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<OrderAddress>
      */
     public function addresses(): HasMany
     {
@@ -184,7 +187,7 @@ class Order extends BaseModel
     /**
      * Return the shipping address relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne<OrderAddress>
      */
     public function shippingAddress(): HasOne
     {
@@ -196,7 +199,7 @@ class Order extends BaseModel
     /**
      * Return the billing address relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne<OrderAddress>
      */
     public function billingAddress(): HasOne
     {
@@ -208,7 +211,7 @@ class Order extends BaseModel
     /**
      * Return the transactions relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<Transaction>
      */
     public function transactions(): HasMany
     {
@@ -218,7 +221,7 @@ class Order extends BaseModel
     /**
      * Return the charges relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<Transaction>
      */
     public function captures(): HasMany
     {
@@ -228,7 +231,7 @@ class Order extends BaseModel
     /**
      * Return the charges relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<Transaction>
      */
     public function intents(): HasMany
     {
@@ -238,7 +241,7 @@ class Order extends BaseModel
     /**
      * Return the refunds relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany<Transaction>
      */
     public function refunds(): HasMany
     {
@@ -248,7 +251,7 @@ class Order extends BaseModel
     /**
      * Return the customer relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Customer>
      */
     public function customer(): BelongsTo
     {
@@ -258,18 +261,18 @@ class Order extends BaseModel
     /**
      * Return the user relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this
-            ->belongsTo(
-                config('auth.providers.users.model')
-            );
+            ->belongsTo(config('auth.providers.users.model'));
     }
 
     /**
      * Determines if this is a draft order.
+     *
+     * @return bool
      */
     public function isDraft(): bool
     {
@@ -278,6 +281,8 @@ class Order extends BaseModel
 
     /**
      * Determines if this is a placed order.
+     *
+     * @return bool
      */
     public function isPlaced(): bool
     {

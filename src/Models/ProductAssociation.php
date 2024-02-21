@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\ProductAssociationFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -58,7 +59,7 @@ class ProductAssociation extends BaseModel
     /**
      * Return the parent relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Product>
      */
     public function parent(): BelongsTo
     {
@@ -68,7 +69,7 @@ class ProductAssociation extends BaseModel
     /**
      * Return the parent relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Product>
      */
     public function target(): BelongsTo
     {
@@ -78,40 +79,44 @@ class ProductAssociation extends BaseModel
     /**
      * Apply the cross sell scope.
      *
-     * @return void
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeCrossSell(Builder $query): Builder
     {
-        $query->type(self::CROSS_SELL);
+        return $query->type(self::CROSS_SELL);
     }
 
     /**
      * Apply the up sell scope.
      *
-     * @return void
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeUpSell(Builder $query): Builder
     {
-        $query->type(self::UP_SELL);
+        return $query->type(self::UP_SELL);
     }
 
     /**
      * Apply the up alternate scope.
      *
-     * @return void
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeAlternate(Builder $query): Builder
     {
-        $query->type(self::ALTERNATE);
+        return $query->type(self::ALTERNATE);
     }
 
     /**
      * Apply the type scope.
      *
+     * @param  Builder  $query
      * @param  string  $type
-     * @return void
+     * @return Builder
      */
-    public function scopeType(Builder $query, $type): Builder
+    public function scopeType(Builder $query, string $type): Builder
     {
         return $query->whereType($type);
     }

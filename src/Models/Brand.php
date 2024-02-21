@@ -59,7 +59,7 @@ class Brand extends BaseModel implements SpatieHasMedia
     /**
      * Get the mapped attributes relation.
      *
-     * @return MorphToMany
+     * @return MorphToMany<Attribute>
      */
     public function mappedAttributes(): MorphToMany
     {

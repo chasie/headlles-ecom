@@ -11,6 +11,7 @@ use HeadlessEcom\Base\Traits\HasMedia;
 use HeadlessEcom\Base\Traits\HasTranslations;
 use HeadlessEcom\Base\Traits\Searchable;
 use HeadlessEcom\Database\Factories\ProductOptionFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -77,7 +78,7 @@ class ProductOption extends BaseModel implements SpatieHasMedia
     /**
      * Get the values.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<ProductOptionValue>
+     * @return HasMany<ProductOptionValue>
      */
     public function values(): HasMany
     {

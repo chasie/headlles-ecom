@@ -10,6 +10,7 @@ use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Base\Traits\HasPersonalDetails;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Database\Factories\OrderAddressFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -88,7 +89,7 @@ class OrderAddress extends BaseModel implements Addressable
     /**
      * Return the order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Order>
      */
     public function order(): BelongsTo
     {
@@ -98,7 +99,7 @@ class OrderAddress extends BaseModel implements Addressable
     /**
      * Return the country relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Country>
      */
     public function country(): BelongsTo
     {

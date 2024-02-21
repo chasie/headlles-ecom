@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\TaxZoneStateFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property ?int $tax_zone_id
  * @property ?int $state_id
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class TaxZoneState extends BaseModel
 {
@@ -37,7 +39,7 @@ class TaxZoneState extends BaseModel
     /**
      * Return the tax zone relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function taxZone(): BelongsTo
     {
@@ -47,7 +49,7 @@ class TaxZoneState extends BaseModel
     /**
      * Return the state relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function state(): BelongsTo
     {
