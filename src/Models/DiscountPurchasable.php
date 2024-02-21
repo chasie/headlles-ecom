@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Database\Factories\DiscountPurchasableFactory;
-use HeadlessEcom\Discounts\Database\Factories\DiscountFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -14,8 +16,8 @@ use HeadlessEcom\Discounts\Database\Factories\DiscountFactory;
  * @property string $purchasable_type
  * @property int $purchasable_id
  * @property string $type
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class DiscountPurchasable extends BaseModel
 {
@@ -37,7 +39,7 @@ class DiscountPurchasable extends BaseModel
     /**
      * Return a new factory instance for the model.
      *
-     * @return DiscountFactory
+     * @return DiscountPurchasableFactory
      */
     protected static function newFactory(): DiscountPurchasableFactory
     {
@@ -57,7 +59,7 @@ class DiscountPurchasable extends BaseModel
     /**
      * Return the priceable relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function purchasable(): MorphTo
     {
@@ -66,6 +68,6 @@ class DiscountPurchasable extends BaseModel
 
     public function scopeCondition(Builder $query): Builder
     {
-        $query->whereType('condition');
+        return $query->whereType('condition');
     }
 }

@@ -3,8 +3,8 @@
 namespace HeadlessEcom\FieldTypes;
 
 use JsonSerializable;
-use Livewire\TemporaryUploadedFile;
 use HeadlessEcom\Base\FieldType;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class File implements FieldType, JsonSerializable
 {
