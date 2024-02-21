@@ -10,6 +10,7 @@ use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Base\Traits\HasPersonalDetails;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Database\Factories\OrderAddressFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -31,8 +32,8 @@ use HeadlessEcom\Database\Factories\OrderAddressFactory;
  * @property string $type
  * @property ?string $shipping_option
  * @property array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class OrderAddress extends BaseModel implements Addressable
 {

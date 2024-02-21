@@ -14,6 +14,7 @@ use HeadlessEcom\Base\Traits\HasTags;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Base\Traits\Searchable;
 use HeadlessEcom\Database\Factories\OrderFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -35,10 +36,10 @@ use HeadlessEcom\Database\Factories\OrderFactory;
  * @property string $currency
  * @property ?string $compare_currency_code
  * @property float $exchange_rate
- * @property ?\Illuminate\Support\Carbon $placed_at
+ * @property ?Carbon $placed_at
  * @property ?array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Order extends BaseModel
 {
