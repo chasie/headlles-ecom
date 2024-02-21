@@ -11,7 +11,7 @@ class AddNewCustomerFlagToOrdersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table($this->prefix.'orders', function (Blueprint $table) {
             $table->boolean('new_customer')->after('channel_id')->default(false)->index();
@@ -23,7 +23,7 @@ class AddNewCustomerFlagToOrdersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table($this->prefix.'orders', function (Blueprint $table) {
             $table->dropColumn('new_customer');

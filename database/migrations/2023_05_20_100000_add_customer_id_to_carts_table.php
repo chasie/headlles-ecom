@@ -12,7 +12,7 @@ class AddCustomerIdToCartsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table($this->prefix.'carts', function (Blueprint $table) {
             $table->foreignId('customer_id')->after('user_id')
@@ -26,7 +26,7 @@ class AddCustomerIdToCartsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table($this->prefix.'carts', function (Blueprint $table) {
             if (DB::getDriverName() !== 'sqlite') {

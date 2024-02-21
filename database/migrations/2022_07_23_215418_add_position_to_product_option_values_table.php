@@ -11,7 +11,7 @@ class AddPositionToProductOptionValuesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table($this->prefix.'product_option_values', function (Blueprint $table) {
             $table->integer('position')->after('name')->default(0)->index();
@@ -23,7 +23,7 @@ class AddPositionToProductOptionValuesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table($this->prefix.'product_option_values', function (Blueprint $table) {
             $table->dropColumn('position');

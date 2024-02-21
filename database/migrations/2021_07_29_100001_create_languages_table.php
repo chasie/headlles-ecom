@@ -11,7 +11,7 @@ class CreateLanguagesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create($this->prefix.'languages', function (Blueprint $table) {
             $table->id();
@@ -27,7 +27,7 @@ class CreateLanguagesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->prefix.'languages');
     }

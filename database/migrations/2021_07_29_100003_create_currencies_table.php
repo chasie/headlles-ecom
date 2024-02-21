@@ -11,7 +11,7 @@ class CreateCurrenciesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create($this->prefix.'currencies', function (Blueprint $table) {
             $table->id();
@@ -33,7 +33,7 @@ class CreateCurrenciesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->prefix.'currencies');
     }

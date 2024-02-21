@@ -11,7 +11,7 @@ class UpdatePricesOnOrdersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table($this->prefix.'orders', function (Blueprint $table) {
             $table->unsignedBigInteger('sub_total')->change();
@@ -27,7 +27,7 @@ class UpdatePricesOnOrdersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table($this->prefix.'orders', function (Blueprint $table) {
             $table->unsignedInteger('sub_total')->change();

@@ -11,7 +11,7 @@ class AddHandlePositionToProductOptionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table($this->prefix.'product_options', function (Blueprint $table) {
             // @note Made nullable for now to avoid breaking changes.
@@ -25,7 +25,7 @@ class AddHandlePositionToProductOptionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table($this->prefix.'product_options', function (Blueprint $table) {
             $table->dropColumn(['handle', 'position']);
