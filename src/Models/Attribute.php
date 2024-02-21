@@ -1,6 +1,6 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Database\Factories\AttributeFactory;
-use Chasie\HeadlesEcom\Facades\DB;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Database\Factories\AttributeFactory;
+use HeadlessEcom\Facades\DB;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -30,14 +31,14 @@ use Chasie\HeadlesEcom\Facades\DB;
  * @property string $validation_rules
  * @property bool $filterable
  * @property bool $searchable
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Attribute extends BaseModel
 {
     use HasFactory, HasMacros, HasTranslations;
 
-    public static function boot()
+    public static function boot(): void
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
@@ -98,9 +99,9 @@ class Attribute extends BaseModel
      * Apply the system scope to the query builder.
      *
      * @param  string  $type
-     * @return void
+     * @return Builder
      */
-    public function scopeSystem(Builder $query, $type)
+    public function scopeSystem(Builder $query, $type): Builder
     {
         return $query->whereAttributeType($type)->whereSystem(true);
     }

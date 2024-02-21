@@ -1,16 +1,17 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasChannels;
-use Chasie\HeadlesEcom\Base\Traits\HasCustomerGroups;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Database\Factories\DiscountFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasChannels;
+use HeadlessEcom\Base\Traits\HasCustomerGroups;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Database\Factories\DiscountFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -18,14 +19,14 @@ use Chasie\HeadlesEcom\Database\Factories\DiscountFactory;
  * @property string $handle
  * @property ?string $coupon
  * @property string $type
- * @property \Illuminate\Support\Carbon $starts_at
- * @property \Illuminate\Support\Carbon $ends_at
+ * @property Carbon $starts_at
+ * @property Carbon $ends_at
  * @property int $uses
  * @property ?int $max_uses
  * @property int $priority
  * @property bool $stop
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Discount extends BaseModel
 {
@@ -105,7 +106,7 @@ class Discount extends BaseModel
     /**
      * Return the collections relationship.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function collections(): BelongsToMany
     {
@@ -158,6 +159,7 @@ class Discount extends BaseModel
     /**
      * Return the active scope.
      *
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeActive(Builder $query): Builder
@@ -175,6 +177,9 @@ class Discount extends BaseModel
     /**
      * Return the products scope.
      *
+     * @param  Builder  $query
+     * @param  iterable  $productIds
+     * @param  string|null  $type
      * @return Builder
      */
     public function scopeProducts(
@@ -206,6 +211,9 @@ class Discount extends BaseModel
     /**
      * Return the product variants scope.
      *
+     * @param  Builder  $query
+     * @param  iterable  $variantIds
+     * @param  string|null  $type
      * @return Builder
      */
     public function scopeProductVariants(

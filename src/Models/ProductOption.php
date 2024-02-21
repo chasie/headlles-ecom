@@ -1,16 +1,16 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasMedia;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\Searchable;
-use Chasie\HeadlesEcom\Database\Factories\ProductOptionFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasMedia;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\Searchable;
+use HeadlessEcom\Database\Factories\ProductOptionFactory;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

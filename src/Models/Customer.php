@@ -1,17 +1,21 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\AsAttributeData;
-use Chasie\HeadlesEcom\Base\Traits\HasAttributes;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasPersonalDetails;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\Searchable;
-use Chasie\HeadlesEcom\Database\Factories\CustomerFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\AsAttributeData;
+use HeadlessEcom\Base\Traits\HasAttributes;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasPersonalDetails;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\Searchable;
+use HeadlessEcom\Database\Factories\CustomerFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -23,8 +27,8 @@ use Chasie\HeadlesEcom\Database\Factories\CustomerFactory;
  * @property ?string $account_ref
  * @property ?array $attribute_data
  * @property ?array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Customer extends BaseModel
 {
@@ -61,9 +65,9 @@ class Customer extends BaseModel
     /**
      * Return the customer group relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function customerGroups()
+    public function customerGroups(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
@@ -78,9 +82,9 @@ class Customer extends BaseModel
     /**
      * Return the customer group relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
@@ -95,14 +99,14 @@ class Customer extends BaseModel
     /**
      * Return the addresses relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function addresses()
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
@@ -110,9 +114,9 @@ class Customer extends BaseModel
     /**
      * Get the mapped attributes relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return MorphToMany
      */
-    public function mappedAttributes()
+    public function mappedAttributes(): MorphToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 

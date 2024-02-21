@@ -1,15 +1,15 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\Price;
-use Chasie\HeadlesEcom\Base\Casts\TaxBreakdown;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Database\Factories\OrderLineFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\Price;
+use HeadlessEcom\Base\Casts\TaxBreakdown;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Database\Factories\OrderLineFactory;
 
 /**
  * @property int $id

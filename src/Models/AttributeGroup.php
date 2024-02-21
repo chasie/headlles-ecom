@@ -1,13 +1,15 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Database\Factories\AttributeGroupFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Database\Factories\AttributeGroupFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -15,8 +17,8 @@ use Chasie\HeadlesEcom\Database\Factories\AttributeGroupFactory;
  * @property string $name
  * @property string $handle
  * @property int $position
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class AttributeGroup extends BaseModel
 {
@@ -52,9 +54,9 @@ class AttributeGroup extends BaseModel
     /**
      * Return the attributes relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function attributes()
+    public function attributes(): HasMany
     {
         return $this->hasMany(Attribute::class)->orderBy('position');
     }

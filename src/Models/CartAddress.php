@@ -1,18 +1,20 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\Addressable;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\CachesProperties;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\TaxBreakdown;
-use Chasie\HeadlesEcom\Database\Factories\CartAddressFactory;
-use Chasie\HeadlesEcom\DataTypes\Price;
-use Chasie\HeadlesEcom\DataTypes\ShippingOption;
+use HeadlessEcom\Base\Addressable;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\CachesProperties;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Base\ValueObjects\Cart\TaxBreakdown;
+use HeadlessEcom\Database\Factories\CartAddressFactory;
+use HeadlessEcom\DataTypes\Price;
+use HeadlessEcom\DataTypes\ShippingOption;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -34,8 +36,8 @@ use Chasie\HeadlesEcom\DataTypes\ShippingOption;
  * @property string $type
  * @property ?string $shipping_option
  * @property array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class CartAddress extends BaseModel implements Addressable
 {
@@ -77,7 +79,7 @@ class CartAddress extends BaseModel implements Addressable
     /**
      * The tax breakdown.
      *
-     * @var TaxBreakdown
+     * @var null|TaxBreakdown
      */
     public ?TaxBreakdown $taxBreakdown = null;
 
@@ -127,9 +129,9 @@ class CartAddress extends BaseModel implements Addressable
     /**
      * Return the cart relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function cart()
+    public function cart(): BelongsTo
     {
         return $this->belongsTo(Cart::class);
     }
@@ -137,9 +139,9 @@ class CartAddress extends BaseModel implements Addressable
     /**
      * Return the country relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }

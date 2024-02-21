@@ -1,26 +1,26 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\AsAttributeData;
-use Chasie\HeadlesEcom\Base\Traits\HasChannels;
-use Chasie\HeadlesEcom\Base\Traits\HasCustomerGroups;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasMedia;
-use Chasie\HeadlesEcom\Base\Traits\HasTags;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\HasUrls;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Base\Traits\Searchable;
-use Chasie\HeadlesEcom\Database\Factories\ProductFactory;
-use Chasie\HeadlesEcom\Jobs\Products\Associations\Associate;
-use Chasie\HeadlesEcom\Jobs\Products\Associations\Dissociate;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\AsAttributeData;
+use HeadlessEcom\Base\Traits\HasChannels;
+use HeadlessEcom\Base\Traits\HasCustomerGroups;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasMedia;
+use HeadlessEcom\Base\Traits\HasTags;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\HasUrls;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Base\Traits\Searchable;
+use HeadlessEcom\Database\Factories\ProductFactory;
+use HeadlessEcom\Jobs\Products\Associations\Associate;
+use HeadlessEcom\Jobs\Products\Associations\Dissociate;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

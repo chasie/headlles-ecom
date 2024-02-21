@@ -1,12 +1,15 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\Price as CastsPrice;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Database\Factories\PriceFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\Price as CastsPrice;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Database\Factories\PriceFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 
 /**
@@ -15,16 +18,15 @@ use Spatie\LaravelBlink\BlinkFacade as Blink;
  * @property ?int $currency_id
  * @property string $priceable_type
  * @property int $priceable_id
- * @property int $price
+ * @property \HeadlessEcom\DataTypes\Price $price
  * @property ?int $compare_price
  * @property int $tier
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Price extends BaseModel
 {
-    use HasFactory,
-        HasMacros;
+    use HasFactory, HasMacros;
 
     /**
      * Return a new factory instance for the model.
@@ -50,7 +52,7 @@ class Price extends BaseModel
     /**
      * Return the priceable relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function priceable(): MorphTo
     {
@@ -60,7 +62,7 @@ class Price extends BaseModel
     /**
      * Return the currency relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -70,7 +72,7 @@ class Price extends BaseModel
     /**
      * Return the customer group relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function customerGroup(): BelongsTo
     {
@@ -80,9 +82,9 @@ class Price extends BaseModel
     /**
      * Return the price exclusive of tax.
      *
-     * @return \Chasie\HeadlesEcom\DataTypes\Price
+     * @return \HeadlessEcom\DataTypes\Price
      */
-    public function priceExTax(): Price
+    public function priceExTax(): \HeadlessEcom\DataTypes\Price
     {
         if (!prices_inc_tax())
         {
@@ -99,9 +101,9 @@ class Price extends BaseModel
     /**
      * Return the price inclusive of tax.
      *
-     * @return \Chasie\HeadlesEcom\DataTypes\Price
+     * @return \HeadlessEcom\DataTypes\Price
      */
-    public function priceIncTax(): Price
+    public function priceIncTax(): \HeadlessEcom\DataTypes\Price
     {
         if (prices_inc_tax())
         {

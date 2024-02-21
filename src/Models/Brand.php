@@ -1,27 +1,29 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\AsAttributeData;
-use Chasie\HeadlesEcom\Base\Traits\HasAttributes;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasMedia;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\HasUrls;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Base\Traits\Searchable;
-use Chasie\HeadlesEcom\Database\Factories\BrandFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\AsAttributeData;
+use HeadlessEcom\Base\Traits\HasAttributes;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasMedia;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\HasUrls;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Base\Traits\Searchable;
+use HeadlessEcom\Database\Factories\BrandFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property int $id
  * @property string $name
  * @property ?array $attribute_data
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Brand extends BaseModel implements SpatieHasMedia
 {
@@ -57,9 +59,9 @@ class Brand extends BaseModel implements SpatieHasMedia
     /**
      * Get the mapped attributes relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return MorphToMany
      */
-    public function mappedAttributes()
+    public function mappedAttributes(): MorphToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 

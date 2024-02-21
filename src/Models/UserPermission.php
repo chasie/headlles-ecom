@@ -1,10 +1,10 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
 
 class UserPermission extends BaseModel
 {

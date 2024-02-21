@@ -1,12 +1,12 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasAttributes;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Database\Factories\ProductTypeFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasAttributes;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Database\Factories\ProductTypeFactory;
 
 /**
  * @property int $id

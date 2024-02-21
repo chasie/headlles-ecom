@@ -1,16 +1,21 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\CachesProperties;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\TaxBreakdown;
-use Chasie\HeadlesEcom\Database\Factories\CartLineFactory;
-use Chasie\HeadlesEcom\DataTypes\Price;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\CachesProperties;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Base\ValueObjects\Cart\TaxBreakdown;
+use HeadlessEcom\Database\Factories\CartLineFactory;
+use HeadlessEcom\DataTypes\Price;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -19,8 +24,8 @@ use Chasie\HeadlesEcom\DataTypes\Price;
  * @property int $purchasable_id
  * @property int $quantity
  * @property ?array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class CartLine extends BaseModel
 {
@@ -104,15 +109,15 @@ class CartLine extends BaseModel
      */
     protected $casts = [
         'quantity' => 'integer',
-        'meta' => AsArrayObject::class,
+        'meta'     => AsArrayObject::class,
     ];
 
     /**
      * Return the cart relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function cart()
+    public function cart(): BelongsTo
     {
         return $this->belongsTo(Cart::class);
     }
@@ -120,36 +125,39 @@ class CartLine extends BaseModel
     /**
      * Return the tax class relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     * @return HasOneThrough
      */
-    public function taxClass()
+    public function taxClass(): HasOneThrough
     {
         return $this
             ->hasOneThrough(
-            TaxClass::class,
-            $this->purchasable_type,
-            'tax_class_id',
-            'id'
-        );
+                related  : TaxClass::class,
+                through  : $this->purchasable_type,
+                firstKey : 'tax_class_id',
+                secondKey: 'id'
+            );
     }
 
-    public function discounts()
+    /**
+     * @return BelongsToMany
+     */
+    public function discounts(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
         return $this
             ->belongsToMany(
-            Discount::class,
-            "{$prefix}cart_line_discount"
-        );
+                Discount::class,
+                "{$prefix}cart_line_discount"
+            );
     }
 
     /**
      * Return the polymorphic relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
-    public function purchasable()
+    public function purchasable(): MorphTo
     {
         return $this->morphTo();
     }

@@ -1,13 +1,15 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\Addressable;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Database\Factories\AddressFactory;
+use HeadlessEcom\Base\Addressable;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Database\Factories\AddressFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -26,12 +28,12 @@ use Chasie\HeadlesEcom\Database\Factories\AddressFactory;
  * @property ?string $delivery_instructions
  * @property ?string $contact_mail
  * @property ?string $contact_phone
- * @property ?\Illuminate\Support\Carbon $last_used_at
+ * @property ?Carbon $last_used_at
  * @property array $meta
  * @property bool $shipping_default
  * @property bool $billing_default
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Address extends BaseModel implements Addressable
 {
@@ -59,15 +61,15 @@ class Address extends BaseModel implements Addressable
      * @var array
      */
     protected $casts = [
-        'billing_default' => 'boolean',
-        'meta' => AsArrayObject::class,
+        'billing_default'  => 'boolean',
+        'meta'             => AsArrayObject::class,
         'shipping_default' => 'boolean',
     ];
 
     /**
      * Return the country relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function country(): BelongsTo
     {
@@ -77,7 +79,7 @@ class Address extends BaseModel implements Addressable
     /**
      * Return the customer relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function customer(): BelongsTo
     {

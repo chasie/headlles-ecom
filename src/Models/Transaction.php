@@ -1,15 +1,16 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\Price;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Database\Factories\TransactionFactory;
-use Chasie\HeadlesEcom\Facades\Payments;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\Price;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Database\Factories\TransactionFactory;
+use HeadlessEcom\Facades\Payments;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -25,9 +26,9 @@ use Chasie\HeadlesEcom\Facades\Payments;
  * @property string $card_type
  * @property ?string $last_four
  * @property ?array $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Transaction extends BaseModel
 {

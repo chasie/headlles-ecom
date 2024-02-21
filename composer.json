@@ -1,5 +1,5 @@
 {
-    "name": "chasie/headles-ecom",
+    "name": "headless-ecom/core",
     "description": "Packaged provide Headless E-commerce for fast develop with Laravel",
     "keywords": [
         "chasie",
@@ -20,22 +20,23 @@
         "ext-bcmath": "*",
         "ext-exif": "*",
         "ext-intl": "*",
+        "cartalyst/converter": "^7.0|^8.0",
         "laravel/framework": "^10.0",
-        "spatie/laravel-medialibrary": "^11.0.0",
-        "spatie/laravel-activitylog": "^4.7",
         "laravel/scout": "^10.0",
-        "cartalyst/converter": "^7.0|^8.0"
+        "spatie/laravel-activitylog": "^4.7",
+        "spatie/laravel-blink": "^1.6",
+        "spatie/laravel-medialibrary": "^11.0.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.0"
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
-            "Chasie\\HeadlesEcom\\": "src",
-            "Chasie\\HeadlesEcom\\Database\\Factories\\": "database/factories",
-            "Chasie\\HeadlesEcom\\Database\\Seeders\\": "database/seeders",
-            "Chasie\\HeadlesEcom\\Database\\State\\": "database/state"
+            "HeadlessEcom\\": "src",
+            "HeadlessEcom\\Database\\Factories\\": "database/factories",
+            "HeadlessEcom\\Database\\Seeders\\": "database/seeders",
+            "HeadlessEcom\\Database\\State\\": "database/state"
         }
     },
     "autoload-dev": {

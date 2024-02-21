@@ -1,18 +1,18 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Collection;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\AsAttributeData;
-use Chasie\HeadlesEcom\Base\Purchasable;
-use Chasie\HeadlesEcom\Base\Traits\HasDimensions;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasPrices;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Database\Factories\ProductVariantFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\AsAttributeData;
+use HeadlessEcom\Base\Purchasable;
+use HeadlessEcom\Base\Traits\HasDimensions;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasPrices;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Database\Factories\ProductVariantFactory;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

@@ -1,15 +1,17 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasDefaultRecord;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Database\Factories\ChannelFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasDefaultRecord;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Database\Factories\ChannelFactory;
 
 /**
  * @property int $id
@@ -17,9 +19,9 @@ use Chasie\HeadlesEcom\Database\Factories\ChannelFactory;
  * @property string $handle
  * @property bool $default
  * @property ?string $url
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Channel extends BaseModel
 {
@@ -51,15 +53,16 @@ class Channel extends BaseModel
      * @param  string  $val
      * @return void
      */
-    public function setHandleAttribute($val)
+    public function setHandleAttribute(string $val): void
     {
         $this->attributes['handle'] = Str::slug($val);
     }
 
     /**
      * Get the parent channelable model.
+     * @return MorphTo
      */
-    public function channelable()
+    public function channelable(): MorphTo
     {
         return $this->morphTo();
     }

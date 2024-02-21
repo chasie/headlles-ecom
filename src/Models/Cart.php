@@ -1,42 +1,47 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Chasie\HeadlesEcom\Actions\Carts\AddAddress;
-use Chasie\HeadlesEcom\Actions\Carts\AddOrUpdatePurchasable;
-use Chasie\HeadlesEcom\Actions\Carts\AssociateUser;
-use Chasie\HeadlesEcom\Actions\Carts\CreateOrder;
-use Chasie\HeadlesEcom\Actions\Carts\GenerateFingerprint;
-use Chasie\HeadlesEcom\Actions\Carts\RemovePurchasable;
-use Chasie\HeadlesEcom\Actions\Carts\SetShippingOption;
-use Chasie\HeadlesEcom\Actions\Carts\UpdateCartLine;
-use Chasie\HeadlesEcom\Base\Addressable;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Purchasable;
-use Chasie\HeadlesEcom\Base\Traits\CachesProperties;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\DiscountBreakdown;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\FreeItem;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\Promotion;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\ShippingBreakdown;
-use Chasie\HeadlesEcom\Base\ValueObjects\Cart\TaxBreakdown;
-use Chasie\HeadlesEcom\Database\Factories\CartFactory;
-use Chasie\HeadlesEcom\DataTypes\Price;
-use Chasie\HeadlesEcom\DataTypes\ShippingOption;
-use Chasie\HeadlesEcom\Exceptions\Carts\CartException;
-use Chasie\HeadlesEcom\Exceptions\FingerprintMismatchException;
-use Chasie\HeadlesEcom\Facades\DB;
-use Chasie\HeadlesEcom\Facades\ShippingManifest;
-use Chasie\HeadlesEcom\Pipelines\Cart\Calculate;
-use Chasie\HeadlesEcom\Validation\Cart\ValidateCartForOrderCreation;
+use HeadlessEcom\Actions\Carts\AddAddress;
+use HeadlessEcom\Actions\Carts\AddOrUpdatePurchasable;
+use HeadlessEcom\Actions\Carts\AssociateUser;
+use HeadlessEcom\Actions\Carts\CreateOrder;
+use HeadlessEcom\Actions\Carts\GenerateFingerprint;
+use HeadlessEcom\Actions\Carts\RemovePurchasable;
+use HeadlessEcom\Actions\Carts\SetShippingOption;
+use HeadlessEcom\Actions\Carts\UpdateCartLine;
+use HeadlessEcom\Base\Addressable;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Purchasable;
+use HeadlessEcom\Base\Traits\CachesProperties;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Base\ValueObjects\Cart\DiscountBreakdown;
+use HeadlessEcom\Base\ValueObjects\Cart\FreeItem;
+use HeadlessEcom\Base\ValueObjects\Cart\Promotion;
+use HeadlessEcom\Base\ValueObjects\Cart\ShippingBreakdown;
+use HeadlessEcom\Base\ValueObjects\Cart\TaxBreakdown;
+use HeadlessEcom\Database\Factories\CartFactory;
+use HeadlessEcom\DataTypes\Price;
+use HeadlessEcom\DataTypes\ShippingOption;
+use HeadlessEcom\Exceptions\Carts\CartException;
+use HeadlessEcom\Exceptions\FingerprintMismatchException;
+use HeadlessEcom\Facades\DB;
+use HeadlessEcom\Facades\ShippingManifest;
+use HeadlessEcom\Pipelines\Cart\Calculate;
+use HeadlessEcom\Validation\Cart\ValidateCartForOrderCreation;
+use Throwable;
 
 /**
  * @property int $id
@@ -47,16 +52,13 @@ use Chasie\HeadlesEcom\Validation\Cart\ValidateCartForOrderCreation;
  * @property int $channel_id
  * @property ?int $order_id
  * @property ?string $coupon_code
- * @property ?\Illuminate\Support\Carbon $completed_at
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $completed_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Cart extends BaseModel
 {
-    use CachesProperties;
-    use HasFactory;
-    use HasMacros;
-    use LogsActivity;
+    use CachesProperties, HasFactory, HasMacros, LogsActivity;
 
     /**
      * Array of cachable class properties.
@@ -195,7 +197,7 @@ class Cart extends BaseModel
     /**
      * Return the cart lines relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function lines(): HasMany
     {
@@ -205,7 +207,7 @@ class Cart extends BaseModel
     /**
      * Return the currency relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -215,7 +217,7 @@ class Cart extends BaseModel
     /**
      * Return the user relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -225,7 +227,7 @@ class Cart extends BaseModel
     /**
      * Return the customer relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function customer(): BelongsTo
     {
@@ -240,7 +242,7 @@ class Cart extends BaseModel
     /**
      * Return the addresses relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function addresses(): HasMany
     {
@@ -250,7 +252,7 @@ class Cart extends BaseModel
     /**
      * Return the shipping address relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function shippingAddress(): HasOne
     {
@@ -260,7 +262,7 @@ class Cart extends BaseModel
     /**
      * Return the billing address relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function billingAddress(): HasOne
     {
@@ -270,7 +272,7 @@ class Cart extends BaseModel
     /**
      * Return the order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function orders(): HasMany
     {
@@ -280,6 +282,7 @@ class Cart extends BaseModel
     /**
      * Apply scope to get active cart.
      *
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeActive(Builder $query): Builder
@@ -298,7 +301,8 @@ class Cart extends BaseModel
     /**
      * Return the draft order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @param  int|null  $draftOrderId
+     * @return HasOne
      */
     public function draftOrder(int $draftOrderId = null): HasOne
     {
@@ -317,7 +321,8 @@ class Cart extends BaseModel
     /**
      * Return the completed order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @param  int|null  $completedOrderId
+     * @return HasOne
      */
     public function completedOrder(int $completedOrderId = null): HasOne
     {
@@ -336,7 +341,7 @@ class Cart extends BaseModel
     /**
      * Return the carts completed order.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function completedOrders(): HasMany
     {
@@ -350,7 +355,7 @@ class Cart extends BaseModel
      *
      * @return bool
      */
-    public function hasCompletedOrders()
+    public function hasCompletedOrders(): bool
     {
         return (bool) $this->completedOrders()->count();
     }
@@ -410,9 +415,10 @@ class Cart extends BaseModel
     /**
      * Add cart lines.
      *
-     * @return bool
+     * @param  iterable  $lines
+     * @return Cart
      */
-    public function addLines(iterable $lines)
+    public function addLines(iterable $lines): Cart
     {
         DB::transaction(
             function () use ($lines)
@@ -439,13 +445,15 @@ class Cart extends BaseModel
      */
     public function remove(int $cartLineId, bool $refresh = true): Cart
     {
-        foreach (config('headless-ecom.cart.validators.remove_from_cart', []) as $action)
+        foreach (
+            config('headless-ecom.cart.validators.remove_from_cart', []) as $action
+        )
         {
             app($action)
                 ->using(
                     cart      : $this,
                     cartLineId: $cartLineId,
-            )
+                )
                 ->validate();
         }
 
@@ -462,13 +470,17 @@ class Cart extends BaseModel
     /**
      * Update cart line
      *
-     * @param  array  $meta
+     * @param  int  $cartLineId
+     * @param  int  $quantity
+     * @param  array|null  $meta
+     * @param  bool  $refresh
+     * @return Cart
      */
     public function updateLine(
-        int  $cartLineId,
-        int  $quantity,
-             $meta = null,
-        bool $refresh = true
+        int   $cartLineId,
+        int   $quantity,
+        array $meta = null,
+        bool  $refresh = true
     ): Cart {
         foreach (config('headless-ecom.cart.validators.update_cart_line', []) as $action)
         {
@@ -495,9 +507,10 @@ class Cart extends BaseModel
     /**
      * Update cart lines.
      *
-     * @return \Chasie\HeadlesEcom\Models\Cart
+     * @param  Collection  $lines
+     * @return Cart
      */
-    public function updateLines(Collection $lines)
+    public function updateLines(Collection $lines): Cart
     {
         DB::transaction(
             function () use ($lines)
@@ -521,8 +534,10 @@ class Cart extends BaseModel
 
     /**
      * Deletes all cart lines.
+     *
+     * @return Cart
      */
-    public function clear()
+    public function clear(): Cart
     {
         $this->lines()->delete();
 
@@ -532,12 +547,17 @@ class Cart extends BaseModel
     /**
      * Associate a user to the cart
      *
+     * @param  User  $user
      * @param  string  $policy
      * @param  bool  $refresh
      * @return Cart
+     * @throws Exception
      */
-    public function associate(User $user, $policy = 'merge', $refresh = true)
-    {
+    public function associate(
+        User   $user,
+        string $policy = 'merge',
+        bool   $refresh = true
+    ): Cart {
         if ($this->customer()->exists())
         {
             if (
@@ -550,7 +570,7 @@ class Cart extends BaseModel
                     ->exists()
             )
             {
-                throw new Exception('Invalid user');
+                throw new Exception(__('headless-ecom::exceptions/base.user-invalid'));
             }
         }
 
@@ -566,6 +586,10 @@ class Cart extends BaseModel
 
     /**
      * Associate a customer to the cart
+     *
+     * @param  Customer  $customer
+     * @return Cart
+     * @throws Exception
      */
     public function setCustomer(Customer $customer): Cart
     {
@@ -581,7 +605,7 @@ class Cart extends BaseModel
                     ->exists()
             )
             {
-                throw new Exception('Invalid customer');
+                throw new Exception(__('headless-ecom::exceptions/base.customer-invalid'));
             }
         }
 
@@ -605,7 +629,7 @@ class Cart extends BaseModel
                     cart   : $this,
                     address: $address,
                     type   : $type,
-            )
+                )
                 ->validate();
         }
 
@@ -622,7 +646,8 @@ class Cart extends BaseModel
     /**
      * Set the shipping address.
      *
-     * @return \Chasie\HeadlesEcom\Models\Cart
+     * @param  array|Addressable  $address
+     * @return Cart
      */
     public function setShippingAddress(array|Addressable $address): Cart
     {
@@ -632,7 +657,8 @@ class Cart extends BaseModel
     /**
      * Set the billing address.
      *
-     * @return \Chasie\HeadlesEcom\Models\Cart
+     * @param  array|Addressable  $address
+     * @return Cart
      */
     public function setBillingAddress(array|Addressable $address): Cart
     {
@@ -641,6 +667,10 @@ class Cart extends BaseModel
 
     /**
      * Set the shipping option to the shipping address.
+     *
+     * @param  ShippingOption  $option
+     * @param  bool  $refresh
+     * @return Cart
      */
     public function setShippingOption(ShippingOption $option, $refresh = true): Cart
     {
@@ -650,7 +680,7 @@ class Cart extends BaseModel
                 ->using(
                     cart          : $this,
                     shippingOption: $option,
-            )
+                )
                 ->validate();
         }
 
@@ -666,6 +696,8 @@ class Cart extends BaseModel
 
     /**
      * Get the shipping option for the cart
+     *
+     * @return ShippingOption|null
      */
     public function getShippingOption(): ?ShippingOption
     {
@@ -677,7 +709,7 @@ class Cart extends BaseModel
      *
      * @return bool
      */
-    public function isShippable()
+    public function isShippable(): bool
     {
         return (bool) $this
             ->lines
@@ -688,6 +720,8 @@ class Cart extends BaseModel
     /**
      * Create an order from the Cart.
      *
+     * @param  bool  $allowMultipleOrders
+     * @param  int|null  $orderIdToUpdate
      * @return Order
      */
     public function createOrder(
@@ -706,7 +740,7 @@ class Cart extends BaseModel
             app($action)
                 ->using(
                     cart: $this,
-            )
+                )
                 ->validate();
         }
 
@@ -729,7 +763,7 @@ class Cart extends BaseModel
      *
      * @return bool
      */
-    public function canCreateOrder()
+    public function canCreateOrder(): bool
     {
         $passes = true;
 
@@ -747,7 +781,7 @@ class Cart extends BaseModel
                 app($action)
                     ->using(
                         cart: $this,
-                )
+                    )
                     ->validate();
             } catch (CartException $e)
             {
@@ -763,7 +797,7 @@ class Cart extends BaseModel
      *
      * @return string
      */
-    public function fingerprint()
+    public function fingerprint(): string
     {
         $generator = config(
             'headless-ecom.cart.fingerprint_generator',
@@ -779,9 +813,9 @@ class Cart extends BaseModel
      * @param  string  $fingerprint
      * @return bool
      *
-     * @throws FingerprintMismatchException
+     * @throws FingerprintMismatchException|Throwable
      */
-    public function checkFingerprint($fingerprint)
+    public function checkFingerprint($fingerprint): bool
     {
         return tap(
             $fingerprint == $this->fingerprint(), function ($result)
@@ -796,6 +830,10 @@ class Cart extends BaseModel
 
     /**
      * Return the estimated shipping cost for a cart.
+     *
+     * @param  array  $params
+     * @param  bool  $setOverride
+     * @return ShippingOption|null
      */
     public function getEstimatedShipping(array $params, bool $setOverride = false): ?ShippingOption
     {

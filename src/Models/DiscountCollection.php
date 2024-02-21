@@ -1,12 +1,11 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Database\Factories\DiscountPurchasableFactory;
-use Chasie\HeadlesEcom\Discounts\Database\Factories\DiscountFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Database\Factories\DiscountPurchasableFactory;
 
 class DiscountCollection extends BaseModel
 {
@@ -27,7 +26,7 @@ class DiscountCollection extends BaseModel
     /**
      * Return a new factory instance for the model.
      *
-     * @return DiscountFactory
+     * @return DiscountPurchasableFactory
      */
     protected static function newFactory(): DiscountPurchasableFactory
     {

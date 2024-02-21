@@ -1,20 +1,22 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasDefaultRecord;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Database\Factories\CustomerGroupFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasDefaultRecord;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Database\Factories\CustomerGroupFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $handle
  * @property bool $default
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class CustomerGroup extends BaseModel
 {
@@ -38,9 +40,9 @@ class CustomerGroup extends BaseModel
     /**
      * Return the customer's relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function customers()
+    public function customers(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 

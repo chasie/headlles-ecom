@@ -1,15 +1,17 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMedia as TraitsHasMedia;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMedia as TraitsHasMedia;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 
 /**
  * @property int $id
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Asset extends BaseModel implements HasMedia
 {
@@ -26,14 +28,14 @@ class Asset extends BaseModel implements HasMedia
     /**
      * Get the associated file.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
-    public function file()
+    public function file(): MorphOne
     {
         return $this
             ->morphOne(
-                config('media-library.media_model'),
-                'model'
+                related: config('media-library.media_model'),
+                name   : 'model'
             );
     }
 }

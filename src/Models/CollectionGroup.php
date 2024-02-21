@@ -1,18 +1,20 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Database\Factories\CollectionGroupFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Database\Factories\CollectionGroupFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $handle
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class CollectionGroup extends BaseModel
 {
@@ -28,7 +30,12 @@ class CollectionGroup extends BaseModel
         return CollectionGroupFactory::new();
     }
 
-    public function collections()
+    /**
+     *
+     *
+     * @return HasMany
+     */
+    public function collections(): HasMany
     {
         return $this->hasMany(Collection::class);
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Database\Factories\DiscountPurchasableFactory;
-use Chasie\HeadlesEcom\Discounts\Database\Factories\DiscountFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Database\Factories\DiscountPurchasableFactory;
+use HeadlessEcom\Discounts\Database\Factories\DiscountFactory;
 
 /**
  * @property int $id

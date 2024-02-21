@@ -1,21 +1,23 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 use Kalnoy\Nestedset\NodeTrait;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Casts\AsAttributeData;
-use Chasie\HeadlesEcom\Base\Traits\HasChannels;
-use Chasie\HeadlesEcom\Base\Traits\HasCustomerGroups;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\HasMedia;
-use Chasie\HeadlesEcom\Base\Traits\HasTranslations;
-use Chasie\HeadlesEcom\Base\Traits\HasUrls;
-use Chasie\HeadlesEcom\Base\Traits\Searchable;
-use Chasie\HeadlesEcom\Database\Factories\CollectionFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Casts\AsAttributeData;
+use HeadlessEcom\Base\Traits\HasChannels;
+use HeadlessEcom\Base\Traits\HasCustomerGroups;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\HasMedia;
+use HeadlessEcom\Base\Traits\HasTranslations;
+use HeadlessEcom\Base\Traits\HasUrls;
+use HeadlessEcom\Base\Traits\Searchable;
+use HeadlessEcom\Database\Factories\CollectionFactory;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -27,9 +29,9 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property string $type
  * @property ?array $attribute_data
  * @property string $sort
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Collection extends BaseModel implements SpatieHasMedia
 {
@@ -68,7 +70,7 @@ class Collection extends BaseModel implements SpatieHasMedia
     /**
      * Return the group relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function group()
     {
@@ -79,7 +81,12 @@ class Collection extends BaseModel implements SpatieHasMedia
             );
     }
 
-    public function scopeInGroup(Builder $builder, $id)
+    /**
+     * @param  Builder  $builder
+     * @param $id
+     * @return Builder
+     */
+    public function scopeInGroup(Builder $builder, $id): Builder
     {
         return $builder->where('collection_group_id', $id);
     }
@@ -87,9 +94,9 @@ class Collection extends BaseModel implements SpatieHasMedia
     /**
      * Return the products relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function products()
+    public function products(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
@@ -109,9 +116,9 @@ class Collection extends BaseModel implements SpatieHasMedia
     /**
      * Get the translated name of ancestor collections.
      *
-     * @return Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
-    public function getBreadcrumbAttribute()
+    public function getBreadcrumbAttribute(): \Illuminate\Support\Collection
     {
         return $this
             ->ancestors

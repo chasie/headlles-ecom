@@ -1,14 +1,15 @@
 <?php
 
-namespace Chasie\HeadlesEcom\Models;
+namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Chasie\HeadlesEcom\Base\BaseModel;
-use Chasie\HeadlesEcom\Base\Traits\HasDefaultRecord;
-use Chasie\HeadlesEcom\Base\Traits\HasMacros;
-use Chasie\HeadlesEcom\Base\Traits\LogsActivity;
-use Chasie\HeadlesEcom\Database\Factories\CurrencyFactory;
+use HeadlessEcom\Base\BaseModel;
+use HeadlessEcom\Base\Traits\HasDefaultRecord;
+use HeadlessEcom\Base\Traits\HasMacros;
+use HeadlessEcom\Base\Traits\LogsActivity;
+use HeadlessEcom\Database\Factories\CurrencyFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -18,8 +19,8 @@ use Chasie\HeadlesEcom\Database\Factories\CurrencyFactory;
  * @property int $decimal_places
  * @property bool $enabled
  * @property bool $default
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Currency extends BaseModel
 {
@@ -46,7 +47,7 @@ class Currency extends BaseModel
      *
      * @return HasMany
      */
-    public function prices()
+    public function prices(): HasMany
     {
         return $this->hasMany(Price::class);
     }
@@ -57,7 +58,7 @@ class Currency extends BaseModel
      *
      * @return string
      */
-    public function getFactorAttribute()
+    public function getFactorAttribute(): string
     {
         /**
          * If we figure out how many decimal places we need, we can work
