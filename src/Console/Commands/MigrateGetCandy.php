@@ -3,6 +3,7 @@
 namespace HeadlessEcom\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use HeadlessEcom\Facades\DB;
@@ -27,9 +28,9 @@ class MigrateGetCandy extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $tableNames = collect(
             DB::connection()->getDoctrineSchemaManager()->listTableNames()
@@ -120,7 +121,7 @@ class MigrateGetCandy extends Command
             ]);
         }
 
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 
     protected function migrateTableNames($tables)

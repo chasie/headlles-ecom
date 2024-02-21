@@ -5,6 +5,7 @@ namespace HeadlessEcom\Console\Commands\Orders;
 use Illuminate\Console\Command;
 use HeadlessEcom\Jobs\Orders\MarkAsNewCustomer;
 use HeadlessEcom\Models\Order;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class SyncNewCustomerOrders extends Command
 {
@@ -25,9 +26,9 @@ class SyncNewCustomerOrders extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         Order::orderBy('id')->chunk(500, function ($orders) {
             foreach ($orders as $order) {
@@ -35,6 +36,6 @@ class SyncNewCustomerOrders extends Command
             }
         });
 
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 }

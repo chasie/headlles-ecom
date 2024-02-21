@@ -4,6 +4,7 @@ namespace HeadlessEcom\Console\Commands;
 
 use Illuminate\Console\Command;
 use HeadlessEcom\Addons\Manifest;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class AddonsDiscover extends Command
 {
@@ -24,9 +25,10 @@ class AddonsDiscover extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @param  Manifest  $manifest
+     * @return int
      */
-    public function handle(Manifest $manifest)
+    public function handle(Manifest $manifest): int
     {
         $manifest->build();
 
@@ -35,5 +37,7 @@ class AddonsDiscover extends Command
         }
 
         $this->info('Addon manifest generated successfully.');
+
+        return CommandAlias::SUCCESS;
     }
 }

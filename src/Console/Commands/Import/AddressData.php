@@ -3,6 +3,7 @@
 namespace HeadlessEcom\Console\Commands\Import;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 use Illuminate\Support\Facades\Http;
 use HeadlessEcom\Facades\DB;
 use HeadlessEcom\Models\Country;
@@ -28,7 +29,7 @@ class AddressData extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Importing Countries and States');
 
@@ -38,7 +39,7 @@ class AddressData extends Command
          * Here we are using Http over Https due to some environments not having
          * the latest CA Authorities installed, causing an SSL exception to be thrown.
          */
-        $countries = Http::get('http://data.HeadlessEcomphp.io/countries+states.json')
+        $countries = Http::get('http://data.lunarphp.io/countries+states.json')
             ->object();
 
         $newCountries = collect($countries)->filter(function ($country) use ($existing) {
@@ -48,7 +49,7 @@ class AddressData extends Command
         if (! $newCountries->count()) {
             $this->info('There are no new countries to import');
 
-            return Command::SUCCESS;
+            return CommandAlias::SUCCESS;
         }
 
         DB::transaction(function () use ($newCountries) {
@@ -78,6 +79,6 @@ class AddressData extends Command
 
         $this->line('');
 
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 }

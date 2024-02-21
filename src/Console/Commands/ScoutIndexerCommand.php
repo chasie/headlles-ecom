@@ -3,6 +3,7 @@
 namespace HeadlessEcom\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ScoutIndexerCommand extends Command
 {
@@ -66,7 +67,7 @@ class ScoutIndexerCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         // Check if --refresh and --flush options has been passed
         if ($this->option('flush') && $this->option('refresh')) {
@@ -74,7 +75,7 @@ class ScoutIndexerCommand extends Command
             $this->error('You can\'t use the [--refresh] and [--flush] options together.');
             $this->newLine();
 
-            return;
+            return CommandAlias::FAILURE;
         }
 
         // Return searchable models from config
@@ -90,7 +91,7 @@ class ScoutIndexerCommand extends Command
                 $this->info('When using the [--ignore] option, you must provide at least one model to index.');
                 $this->newLine();
 
-                return;
+                return CommandAlias::FAILURE;
             } else {
                 // Run the indexer commands
                 $this->indexer($this->argument('models'));
@@ -104,6 +105,6 @@ class ScoutIndexerCommand extends Command
             $this->indexer($models);
         }
 
-        return 0;
+        return CommandAlias::SUCCESS;
     }
 }
