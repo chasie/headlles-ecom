@@ -2,7 +2,7 @@
 
 namespace HeadlessEcom\Base;
 
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 
 class StandardMediaConversions
 {
@@ -26,7 +26,7 @@ class StandardMediaConversions
         foreach ($conversions as $key => $conversion) {
             $model->addMediaConversion($key)
                 ->fit(
-                    Manipulations::FIT_FILL,
+                    Fit::Fill,
                     $conversion['width'],
                     $conversion['height']
                 )->keepOriginalImageFormat();

@@ -23,6 +23,7 @@
         "cartalyst/converter": "^7.0|^8.0",
         "laravel/framework": "^10.0",
         "laravel/scout": "^10.0",
+        "spatie/image": "^3.3",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-blink": "^1.6",
         "spatie/laravel-medialibrary": "^11.0.0"
