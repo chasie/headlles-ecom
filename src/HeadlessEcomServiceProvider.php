@@ -67,7 +67,7 @@ use HeadlessEcom\Observers\OrderObserver;
 use HeadlessEcom\Observers\TransactionObserver;
 use HeadlessEcom\Observers\UrlObserver;
 
-class HeadlesEcomServiceProvider extends ServiceProvider
+class HeadlessEcomServiceProvider extends ServiceProvider
 {
     protected $configFiles = [
         'cart',
