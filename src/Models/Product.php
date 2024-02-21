@@ -24,6 +24,7 @@ use HeadlessEcom\Base\Traits\Searchable;
 use HeadlessEcom\Database\Factories\ProductFactory;
 use HeadlessEcom\Jobs\Products\Associations\Associate;
 use HeadlessEcom\Jobs\Products\Associations\Dissociate;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -32,9 +33,9 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property int $product_type_id
  * @property string $status
  * @property array $attribute_data
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Product extends BaseModel implements SpatieHasMedia
 {
