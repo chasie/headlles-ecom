@@ -44,7 +44,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Chasie\\HeadlesEcom\\Tests\\": "tests"
+            "HeadlessEcom\\Tests\\": "tests"
         }
     },
     "scripts": {

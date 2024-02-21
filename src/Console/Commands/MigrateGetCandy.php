@@ -124,7 +124,7 @@ class MigrateGetCandy extends Command
         return CommandAlias::SUCCESS;
     }
 
-    protected function migrateTableNames($tables)
+    protected function migrateTableNames($tables): void
     {
         try {
             $adminMigrations = collect(File::files(
