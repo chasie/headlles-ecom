@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use HeadlessEcom\Facades\DB;
 use HeadlessEcom\FieldTypes\TranslatedText;
-use HeadlessEcom\Hub\AdminHubServiceProvider;
+//use HeadlessEcom\Hub\AdminHubServiceProvider;
 use HeadlessEcom\Models\Attribute;
 use HeadlessEcom\Models\AttributeGroup;
 use HeadlessEcom\Models\Channel;
@@ -237,11 +237,11 @@ class InstallHeadlessEcom extends Command
             }
         });
 
-        if ($this->isHubInstalled()) {
-            $this->newLine();
-            $this->line('Installing Admin Hub.');
-            $this->call('headless-ecom:hub:install');
-        }
+//        if ($this->isHubInstalled()) {
+//            $this->newLine();
+//            $this->line('Installing Admin Hub.');
+//            $this->call('headless-ecom:hub:install');
+//        }
 
         $this->newLine();
         $this->comment('headless-ecom is now installed 🚀');
@@ -296,13 +296,13 @@ class InstallHeadlessEcom extends Command
         $this->call('vendor:publish', $params);
     }
 
-    /**
-     * Determines if the admin hub is installed.
-     *
-     * @return bool
-     */
-    private function isHubInstalled()
-    {
-        return class_exists(AdminHubServiceProvider::class);
-    }
+//    /**
+//     * Determines if the admin hub is installed.
+//     *
+//     * @return bool
+//     */
+//    private function isHubInstalled()
+//    {
+//        return class_exists(AdminHubServiceProvider::class);
+//    }
 }
