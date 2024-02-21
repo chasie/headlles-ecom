@@ -1,13 +1,13 @@
 <?php
 
-use HeadlessEcom\Base\Traits\HeadlessEcomUser;
+use HeadlessEcom\Base\Traits\EcomUser;
 
 if (! function_exists('is_HeadlessEcom_user')) {
     function is_HeadlessEcom_user($user)
     {
         $traits = class_uses_recursive($user);
 
-        return in_array(HeadlessEcomUser::class, $traits);
+        return in_array(EcomUser::class, $traits);
     }
 }
 
