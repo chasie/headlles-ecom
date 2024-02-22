@@ -7,13 +7,15 @@ use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasDefaultRecord;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\TaxClassFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
  * @property bool $default
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class TaxClass extends BaseModel
 {
@@ -21,7 +23,10 @@ class TaxClass extends BaseModel
         HasFactory,
         HasMacros;
 
-    public static function booted()
+    /**
+     * @return void
+     */
+    public static function booted(): void
     {
         static::updated(
             function ($taxClass)
@@ -75,7 +80,7 @@ class TaxClass extends BaseModel
     /**
      * Return the tax rate amounts relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function taxRateAmounts(): HasMany
     {

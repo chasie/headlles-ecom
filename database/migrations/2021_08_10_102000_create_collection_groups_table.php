@@ -8,12 +8,14 @@ class CreateCollectionGroupsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'collection_groups', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('handle')->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'collection_groups')) {
+            Schema::create($this->prefix.'collection_groups', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->string('handle')->index();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

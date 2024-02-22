@@ -14,7 +14,7 @@ use HeadlessEcom\Search\ScoutIndexer;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
+ * @group headless-ecom.search
  */
 class ScoutIndexerTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ScoutIndexerTest extends TestCase
     /** @test */
     public function can_get_correct_index_name()
     {
-        Config::set('scout.prefix', 'lt_');
+        Config::set('scout.prefix', 'ecom_');
 
         $product = Product::factory()->create();
         $collection = Collection::factory()->create();
@@ -31,8 +31,8 @@ class ScoutIndexerTest extends TestCase
         $productIndex = app(ScoutIndexer::class)->searchableAs($product);
         $collectionIndex = app(ScoutIndexer::class)->searchableAs($collection);
 
-        $this->assertEquals('lt_products', $productIndex);
-        $this->assertEquals('lt_collections', $collectionIndex);
+        $this->assertEquals('ecom_products', $productIndex);
+        $this->assertEquals('ecom_collections', $collectionIndex);
     }
 
     /** @test */

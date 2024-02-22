@@ -10,7 +10,7 @@ use HeadlessEcom\Models\TaxZone;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class TaxZoneTest extends TestCase
 {

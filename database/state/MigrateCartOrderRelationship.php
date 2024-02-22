@@ -12,7 +12,7 @@ class MigrateCartOrderRelationship
         //
     }
 
-    public function run()
+    public function run(): void
     {
         $prefix = config('headless-ecom.database.table_prefix');
 
@@ -26,7 +26,7 @@ class MigrateCartOrderRelationship
         DB::select("update {$prefix}carts set order_id = null");
     }
 
-    protected function canRun()
+    protected function canRun(): bool
     {
         $prefix = config('headless-ecom.database.table_prefix');
 

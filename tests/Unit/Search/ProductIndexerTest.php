@@ -13,8 +13,8 @@ use HeadlessEcom\Search\ProductIndexer;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
- * @group lunar.search.product
+ * @group headless-ecom.search
+ * @group headless-ecom.search.product
  */
 class ProductIndexerTest extends TestCase
 {

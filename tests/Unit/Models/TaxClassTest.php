@@ -7,7 +7,7 @@ use HeadlessEcom\Models\TaxClass;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class TaxClassTest extends TestCase
 {

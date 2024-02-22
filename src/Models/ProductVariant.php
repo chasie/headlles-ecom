@@ -3,6 +3,9 @@
 namespace HeadlessEcom\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Casts\AsAttributeData;
@@ -41,9 +44,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int $stock
  * @property int $backorder
  * @property string $purchasable
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class ProductVariant extends BaseModel implements Purchasable
 {
@@ -80,7 +83,7 @@ class ProductVariant extends BaseModel implements Purchasable
     /**
      * The related product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function product(): BelongsTo
     {
@@ -90,7 +93,7 @@ class ProductVariant extends BaseModel implements Purchasable
     /**
      * Return the tax class relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function taxClass(): BelongsTo
     {
@@ -100,7 +103,7 @@ class ProductVariant extends BaseModel implements Purchasable
     /**
      * Return the related product option values.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function values(): BelongsToMany
     {
@@ -131,16 +134,18 @@ class ProductVariant extends BaseModel implements Purchasable
 
     /**
      * Return the tax class.
+     *
+     * @return TaxClass
      */
     public function getTaxClass(): TaxClass
     {
         return Blink::once(
             "tax_class_{$this->tax_class_id}",
-            fn() => $this->taxClas
+            fn() => $this->taxClass
         );
     }
 
-    public function getTaxReference()
+    public function getTaxReference(): ?string
     {
         return $this->tax_ref;
     }

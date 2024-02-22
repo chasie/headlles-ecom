@@ -10,7 +10,7 @@ use HeadlessEcom\Models\Product;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.traits
+ * @group headless-ecom.traits
  */
 class HasCustomerGroupsTest extends TestCase
 {
@@ -25,8 +25,10 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -45,8 +47,10 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -67,9 +71,11 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup([$groups->first(), $groups->last()]);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         foreach ($groups as $group) {
             $this->assertDatabaseHas(
-                'lunar_customer_group_product',
+                "{$prefix}customer_group_product",
                 [
                     'customer_group_id' => $group->id,
                     'enabled' => 1,
@@ -89,9 +95,11 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup($groups);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         foreach ($groups as $group) {
             $this->assertDatabaseHas(
-                'lunar_customer_group_product',
+                "{$prefix}customer_group_product",
                 [
                     'customer_group_id' => $group->id,
                     'enabled' => 1,
@@ -129,9 +137,11 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup($groups->pluck('id')->toArray());
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         foreach ($groups as $group) {
             $this->assertDatabaseHas(
-                'lunar_customer_group_product',
+                "{$prefix}customer_group_product",
                 [
                     'customer_group_id' => $group->id,
                     'enabled' => 1,
@@ -151,9 +161,11 @@ class HasCustomerGroupsTest extends TestCase
 
         $product->scheduleCustomerGroup($groups->pluck('id')->toArray());
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         foreach ($groups as $group) {
             $this->assertDatabaseHas(
-                'lunar_customer_group_product',
+                "{$prefix}customer_group_product",
                 [
                     'customer_group_id' => $group->id,
                     'enabled' => 1,

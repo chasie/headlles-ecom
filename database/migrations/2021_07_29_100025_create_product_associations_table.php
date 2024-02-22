@@ -13,13 +13,15 @@ class CreateProductAssociationsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'product_associations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_parent_id')->constrained($this->prefix.'products');
-            $table->foreignId('product_target_id')->constrained($this->prefix.'products');
-            $table->string('type')->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'product_associations')) {
+            Schema::create($this->prefix.'product_associations', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('product_parent_id')->constrained($this->prefix.'products');
+                $table->foreignId('product_target_id')->constrained($this->prefix.'products');
+                $table->string('type')->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

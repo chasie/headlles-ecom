@@ -12,7 +12,7 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.jobs
+ * @group headless-ecom.jobs
  */
 class UpdateProductPositionsTest extends TestCase
 {

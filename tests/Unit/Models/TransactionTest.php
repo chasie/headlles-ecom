@@ -10,7 +10,7 @@ use HeadlessEcom\Models\Transaction;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.transactions
+ * @group headless-ecom.transactions
  */
 class TransactionTest extends TestCase
 {

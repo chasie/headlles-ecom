@@ -33,7 +33,9 @@ class AddressTest extends TestCase
 
         Address::create($data);
 
-        $this->assertDatabaseHas('lunar_addresses', $data);
+        $prefix = config('headless-ecom.database.table_prefix');
+
+        $this->assertDatabaseHas("{$prefix}addresses", $data);
     }
 
     /** @test */
@@ -67,7 +69,9 @@ class AddressTest extends TestCase
 
         $data['meta'] = json_encode($data['meta']);
 
-        $this->assertDatabaseHas('lunar_addresses', $data);
+        $prefix = config('headless-ecom.database.table_prefix');
+
+        $this->assertDatabaseHas("{$prefix}addresses", $data);
 
         $this->assertInstanceOf(Customer::class, $address->customer);
         $this->assertInstanceOf(Country::class, $address->country);

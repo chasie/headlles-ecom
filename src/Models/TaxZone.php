@@ -7,6 +7,8 @@ use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasDefaultRecord;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\TaxZoneFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * @property int $id
@@ -53,7 +55,7 @@ class TaxZone extends BaseModel
     /**
      * Return the countries relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function countries(): HasMany
     {
@@ -63,7 +65,7 @@ class TaxZone extends BaseModel
     /**
      * Return the states relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function states(): HasMany
     {
@@ -73,7 +75,7 @@ class TaxZone extends BaseModel
     /**
      * Return the postcodes relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function postcodes(): HasMany
     {
@@ -83,7 +85,7 @@ class TaxZone extends BaseModel
     /**
      * Return the customer groups relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function customerGroups(): HasMany
     {
@@ -93,7 +95,7 @@ class TaxZone extends BaseModel
     /**
      * Return the tax rates relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function taxRates(): HasMany
     {
@@ -103,7 +105,7 @@ class TaxZone extends BaseModel
     /**
      * Return the tax amounts relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return HasManyThrough
      */
     public function taxAmounts(): HasManyThrough
     {

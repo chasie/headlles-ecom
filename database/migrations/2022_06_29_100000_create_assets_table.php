@@ -8,10 +8,12 @@ class CreateAssetsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'assets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'assets')) {
+            Schema::create($this->prefix.'assets', function (Blueprint $table) {
+                $table->id();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

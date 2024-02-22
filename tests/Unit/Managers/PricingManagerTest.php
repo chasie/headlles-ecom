@@ -16,7 +16,7 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.pricing-manager
+ * @group headless-ecom.pricing-manager
  */
 class PricingManagerTest extends TestCase
 {
@@ -406,7 +406,7 @@ class PricingManagerTest extends TestCase
         $this->assertEquals($price->id, $pricing->matched->id);
         $this->assertEquals($price->price->value, $pricing->matched->price->value);
 
-        config()->set('lunar.pricing.pipelines', [
+        config()->set('headless-ecom.pricing.pipelines', [
             // set price to 200
             TestPricingPipeline::class,
         ]);

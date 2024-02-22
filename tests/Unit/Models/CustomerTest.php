@@ -11,7 +11,7 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class CustomerTest extends TestCase
 {
@@ -33,8 +33,10 @@ class CustomerTest extends TestCase
 
         $customer['meta'] = json_encode($customer['meta']);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customers',
+            "{$prefix}customers",
             $customer
         );
     }
@@ -55,8 +57,10 @@ class CustomerTest extends TestCase
 
         $customer['meta'] = json_encode($customer['meta']);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customers',
+            "{$prefix}customers",
             $customer
         );
     }

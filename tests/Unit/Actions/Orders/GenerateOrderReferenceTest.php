@@ -12,7 +12,7 @@ use HeadlessEcom\Tests\Stubs\TestOrderReferenceGenerator;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.actions
+ * @group headless-ecom.actions
  */
 class GenerateOrderReferenceTest extends TestCase
 {
@@ -56,7 +56,7 @@ class GenerateOrderReferenceTest extends TestCase
             'placed_at' => now(),
         ]);
 
-        Config::set('lunar.orders.reference_generator', TestOrderReferenceGenerator::class);
+        Config::set('headless-ecom.orders.reference_generator', TestOrderReferenceGenerator::class);
 
         $this->assertNull($order->reference);
 
@@ -73,7 +73,7 @@ class GenerateOrderReferenceTest extends TestCase
             'placed_at' => now(),
         ]);
 
-        Config::set('lunar.orders.reference_generator', null);
+        Config::set('headless-ecom.orders.reference_generator', null);
 
         $this->assertNull($order->reference);
 

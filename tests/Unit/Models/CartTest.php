@@ -34,7 +34,7 @@ use HeadlessEcom\Tests\TestCase;
 use NumberFormatter;
 
 /**
- * @group lunar.carts
+ * @group headless-ecom.carts
  */
 class CartTest extends TestCase
 {
@@ -493,7 +493,7 @@ class CartTest extends TestCase
     /** @test */
     public function can_calculate_the_cart_inc_vat()
     {
-        Config::set('lunar.pricing.stored_inclusive_of_tax', true);
+        Config::set('headless-ecom.pricing.stored_inclusive_of_tax', true);
 
         $currency = Currency::factory()
             ->state([
@@ -778,7 +778,7 @@ class CartTest extends TestCase
         $this->assertEquals(600, $cart->shippingTotal->value);
         $this->assertEquals(720, $cart->total->value);
 
-        Config::set('lunar.pricing.stored_inclusive_of_tax', true);
+        Config::set('headless-ecom.pricing.stored_inclusive_of_tax', true);
 
         $cart->calculate();
 

@@ -10,6 +10,8 @@ use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Base\Traits\LogsActivity;
 use HeadlessEcom\Database\Factories\TransactionFactory;
 use HeadlessEcom\Facades\Payments;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
 
 /**
@@ -59,7 +61,7 @@ class Transaction extends BaseModel
     /**
      * Return the order relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function order(): BelongsTo
     {
@@ -69,7 +71,7 @@ class Transaction extends BaseModel
     /**
      * Return the currency relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     * @return HasOneThrough
      */
     public function currency(): HasOneThrough
     {

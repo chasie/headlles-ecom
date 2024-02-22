@@ -2,6 +2,7 @@
 
 namespace HeadlessEcom\Database\State;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Schema;
 use HeadlessEcom\Facades\DB;
 use HeadlessEcom\Models\Brand;
@@ -15,7 +16,7 @@ class EnsureMediaCollectionsAreRenamed
         //
     }
 
-    public function run()
+    public function run(): void
     {
         if (! $this->shouldRun()) {
             return;
@@ -30,9 +31,9 @@ class EnsureMediaCollectionsAreRenamed
     }
 
     /**
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
-    protected function getOutdatedMediaQuery()
+    protected function getOutdatedMediaQuery(): Builder
     {
         return DB::table(app(config('media-library.media_model'))->getTable())
             ->whereIn('model_type', [Product::class, Collection::class, Brand::class])

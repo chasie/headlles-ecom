@@ -4,7 +4,7 @@ return [
 
     'connection' => '',
 
-    'table_prefix' => 'headless_ecom_',
+    'table_prefix' => 'ecom_',
 
     /*
     |--------------------------------------------------------------------------

@@ -4,6 +4,7 @@ namespace HeadlessEcom\Tests\Unit\Models;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use HeadlessEcom\Models\ProductOption;
 use HeadlessEcom\Models\ProductOptionValue;

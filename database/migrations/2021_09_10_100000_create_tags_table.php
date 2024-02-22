@@ -8,11 +8,13 @@ class CreateTagsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('value')->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'tags')) {
+            Schema::create($this->prefix.'tags', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('value')->index();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

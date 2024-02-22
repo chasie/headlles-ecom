@@ -2,7 +2,18 @@
 
 namespace HeadlessEcom;
 
+use Cartalyst\Converter\Laravel\Facades\Converter;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Database\Events\MigrationsEnded;
+use Illuminate\Database\Events\MigrationsStarted;
+use Illuminate\Database\Events\NoPendingMigrations;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 use HeadlessEcom\Addons\Manifest;
 use HeadlessEcom\Base\AttributeManifest;
 use HeadlessEcom\Base\AttributeManifestInterface;
@@ -89,73 +100,121 @@ class HeadlessEcomServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        collect($this->configFiles)->each(function ($config) {
-            $this->mergeConfigFrom("{$this->root}/config/$config.php", "headless-ecom.$config");
-        });
+        collect($this->configFiles)->each(
+            function ($config)
+            {
+                $this->mergeConfigFrom("{$this->root}/config/$config.php", "headless-ecom.$config");
+            }
+        );
 
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'headless-ecom');
 
         $this->registerAddonManifest();
 
-        $this->app->singleton(CartModifiers::class, function () {
+        $this->app->singleton(
+            CartModifiers::class, function ()
+        {
             return new CartModifiers();
-        });
+        }
+        );
 
-        $this->app->singleton(CartLineModifiers::class, function () {
+        $this->app->singleton(
+            CartLineModifiers::class, function ()
+        {
             return new CartLineModifiers();
-        });
+        }
+        );
 
-        $this->app->singleton(OrderModifiers::class, function () {
+        $this->app->singleton(
+            OrderModifiers::class, function ()
+        {
             return new OrderModifiers();
-        });
+        }
+        );
 
-        $this->app->singleton(CartSessionInterface::class, function ($app) {
+        $this->app->singleton(
+            CartSessionInterface::class, function ($app)
+        {
             return $app->make(CartSessionManager::class);
-        });
+        }
+        );
 
-        $this->app->singleton(StorefrontSessionInterface::class, function ($app) {
+        $this->app->singleton(
+            StorefrontSessionInterface::class, function ($app)
+        {
             return $app->make(StorefrontSessionManager::class);
-        });
+        }
+        );
 
-        $this->app->singleton(ShippingModifiers::class, function ($app) {
+        $this->app->singleton(
+            ShippingModifiers::class, function ($app)
+        {
             return new ShippingModifiers();
-        });
+        }
+        );
 
-        $this->app->singleton(ShippingManifestInterface::class, function ($app) {
+        $this->app->singleton(
+            ShippingManifestInterface::class, function ($app)
+        {
             return $app->make(ShippingManifest::class);
-        });
+        }
+        );
 
-        $this->app->singleton(OrderReferenceGeneratorInterface::class, function ($app) {
+        $this->app->singleton(
+            OrderReferenceGeneratorInterface::class, function ($app)
+        {
             return $app->make(OrderReferenceGenerator::class);
-        });
+        }
+        );
 
-        $this->app->singleton(AttributeManifestInterface::class, function ($app) {
+        $this->app->singleton(
+            AttributeManifestInterface::class, function ($app)
+        {
             return $app->make(AttributeManifest::class);
-        });
+        }
+        );
 
-        $this->app->singleton(FieldTypeManifestInterface::class, function ($app) {
+        $this->app->singleton(
+            FieldTypeManifestInterface::class, function ($app)
+        {
             return $app->make(FieldTypeManifest::class);
-        });
+        }
+        );
 
-        $this->app->singleton(ModelManifestInterface::class, function ($app) {
+        $this->app->singleton(
+            ModelManifestInterface::class, function ($app)
+        {
             return $app->make(ModelManifest::class);
-        });
+        }
+        );
 
-        $this->app->bind(PricingManagerInterface::class, function ($app) {
+        $this->app->bind(
+            PricingManagerInterface::class, function ($app)
+        {
             return $app->make(PricingManager::class);
-        });
+        }
+        );
 
-        $this->app->singleton(TaxManagerInterface::class, function ($app) {
+        $this->app->singleton(
+            TaxManagerInterface::class, function ($app)
+        {
             return $app->make(TaxManager::class);
-        });
+        }
+        );
 
-        $this->app->singleton(PaymentManagerInterface::class, function ($app) {
+        $this->app->singleton(
+            PaymentManagerInterface::class, function ($app)
+        {
             return $app->make(PaymentManager::class);
-        });
+        }
+        );
 
-        $this->app->singleton(DiscountManagerInterface::class, function ($app) {
+        $this->app->singleton(
+            DiscountManagerInterface::class, function ($app)
+        {
             return $app->make(DiscountManager::class);
-        });
+        }
+        );
     }
 
     /**
@@ -163,7 +222,8 @@ class HeadlessEcomServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (! config('headless-ecom.database.disable_migrations', false)) {
+        if (!config('headless-ecom.database.disable_migrations', false))
+        {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         }
 
@@ -171,48 +231,55 @@ class HeadlessEcomServiceProvider extends ServiceProvider
         $this->registerBlueprintMacros();
         $this->registerStateListeners();
 
-        if ($this->app->runningInConsole()) {
-            collect($this->configFiles)->each(function ($config) {
-                $this->publishes(
-                    [
-                                     "{$this->root}/config/$config.php" => config_path("headless-ecom/$config.php"),
-                                 ], 
-                    'headless-ecom'
-                );
-            });
+        if ($this->app->runningInConsole())
+        {
+            collect($this->configFiles)->each(
+                function ($config)
+                {
+                    $this->publishes(
+                        [
+                            "{$this->root}/config/$config.php" => config_path("headless-ecom/$config.php"),
+                        ],
+                        'headless-ecom'
+                    );
+                }
+            );
 
             $this->publishes(
                 [
-                                 __DIR__.'/../resources/lang' => lang_path('vendor/headless-ecom'),
-                             ],
+                    __DIR__.'/../resources/lang' => lang_path('vendor/headless-ecom'),
+                ],
                 'headless-ecom.translation'
             );
 
             $this->publishes(
                 [
-                                 __DIR__.'/../database/migrations/' => database_path('migrations'),
-                             ], 
+                    __DIR__.'/../database/migrations/' => database_path('migrations'),
+                ],
                 'headless-ecom.migrations'
             );
 
             $this->commands(
                 [
-                                InstallHeadlessEcom::class,
-                                AddonsDiscover::class,
-                                AddressData::class,
-                                ScoutIndexerCommand::class,
-                                MigrateGetCandy::class,
-                                SyncNewCustomerOrders::class,
-                            ]
+                    InstallHeadlessEcom::class,
+                    AddonsDiscover::class,
+                    AddressData::class,
+                    ScoutIndexerCommand::class,
+                    MigrateGetCandy::class,
+                    SyncNewCustomerOrders::class,
+                ]
             );
         }
 
         Arr::macro('permutate', [\HeadlessEcom\Utils\Arr::class, 'permutate']);
 
         // Handle generator
-        Str::macro('handle', function ($string) {
+        Str::macro(
+            'handle', function ($string)
+        {
             return Str::slug($string, '_');
-        });
+        }
+        );
 
         Converter::setMeasurements(
             config('headless-ecom.shipping.measurements', [])
@@ -231,14 +298,16 @@ class HeadlessEcomServiceProvider extends ServiceProvider
 
     protected function registerAddonManifest()
     {
-        $this->app->instance(Manifest::class, new Manifest(
+        $this->app->instance(
+            Manifest::class, new Manifest(
             new Filesystem(),
             $this->app->basePath(),
             $this->app->bootstrapPath().'/cache/headless-ecom_addons.php'
-        ));
+        )
+        );
     }
 
-    protected function registerStateListeners()
+    protected function registerStateListeners(): void
     {
         $states = [
             ConvertProductTypeAttributesToProducts::class,
@@ -250,7 +319,8 @@ class HeadlessEcomServiceProvider extends ServiceProvider
             ConvertTaxbreakdown::class,
         ];
 
-        foreach ($states as $state) {
+        foreach ($states as $state)
+        {
             $class = new $state;
 
             Event::listen(
@@ -288,44 +358,57 @@ class HeadlessEcomServiceProvider extends ServiceProvider
      */
     protected function registerBlueprintMacros(): void
     {
-        Blueprint::macro('scheduling', function () {
+        \Illuminate\Database\Schema\Blueprint::macro(
+            'scheduling', function ()
+        {
             /** @var Blueprint $this */
             $this->boolean('enabled')->default(false)->index();
             $this->timestamp('starts_at')->nullable()->index();
             $this->timestamp('ends_at')->nullable()->index();
-        });
+        }
+        );
 
-        Blueprint::macro('dimensions', function () {
+        Blueprint::macro(
+            'dimensions', function ()
+        {
             /** @var Blueprint $this */
             $columns = ['length', 'width', 'height', 'weight', 'volume'];
-            foreach ($columns as $column) {
+            foreach ($columns as $column)
+            {
                 $this->decimal("{$column}_value", 10, 4)->default(0)->nullable()->index();
                 $this->string("{$column}_unit")->default('mm')->nullable();
             }
-        });
+        }
+        );
 
-        Blueprint::macro('userForeignKey', function ($field_name = 'user_id', $nullable = false) {
+        Blueprint::macro(
+            'userForeignKey', function ($field_name = 'user_id', $nullable = false)
+        {
             /** @var Blueprint $this */
             $userModel = config('auth.providers.users.model');
 
             $type = config('headless-ecom.database.users_id_type', 'bigint');
 
-            if ($type == 'uuid') {
+            if ($type == 'uuid')
+            {
                 $this->foreignUuId($field_name)
                     ->nullable($nullable)
                     ->constrained(
                         (new $userModel())->getTable()
                     );
-            } elseif ($type == 'int') {
+            } elseif ($type == 'int')
+            {
                 $this->unsignedInteger($field_name)->nullable($nullable);
                 $this->foreign($field_name)->references('id')->on('users');
-            } else {
+            } else
+            {
                 $this->foreignId($field_name)
                     ->nullable($nullable)
                     ->constrained(
                         (new $userModel())->getTable()
                     );
             }
-        });
+        }
+        );
     }
 }

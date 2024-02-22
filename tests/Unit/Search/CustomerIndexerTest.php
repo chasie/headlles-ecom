@@ -13,8 +13,8 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
- * @group lunar.search.customer
+ * @group headless-ecom.search
+ * @group headless-ecom.search.customer
  */
 class CustomerIndexerTest extends TestCase
 {

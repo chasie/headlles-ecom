@@ -9,12 +9,12 @@ interface PaymentManagerInterface
      *
      * @return string
      */
-    public function getDefaultDriver();
+    public function getDefaultDriver(): string;
 
     /**
      * Build the provider.
      *
      * @return TaxDriver
      */
-    public function buildProvider();
+    public function buildProvider(): TaxDriver;
 }

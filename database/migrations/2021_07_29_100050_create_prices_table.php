@@ -13,16 +13,24 @@ class CreatePricesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'prices', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_group_id')->nullable()->constrained($this->prefix.'customer_groups');
-            $table->foreignId('currency_id')->nullable()->constrained($this->prefix.'currencies');
-            $table->morphs('priceable');
-            $table->integer('price')->unsigned()->index();
-            $table->integer('compare_price')->unsigned()->nullable();
-            $table->integer('tier')->default(1)->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'prices')) {
+            Schema::create($this->prefix.'prices', function (Blueprint $table) {
+                $table->id();
+                $table
+                    ->foreignId('customer_group_id')
+                    ->nullable()
+                    ->constrained($this->prefix.'customer_groups');
+                $table
+                    ->foreignId('currency_id')
+                    ->nullable()
+                    ->constrained($this->prefix.'currencies');
+                $table->morphs('priceable');
+                $table->unsignedBigInteger('price')->index();
+                $table->unsignedBigInteger('compare_price')->nullable();
+                $table->integer('tier')->default(1)->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

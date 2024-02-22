@@ -12,7 +12,11 @@ class ScoutIndexer implements ScoutIndexerInterface
 {
     public function searchableAs(Model $model): string
     {
-        $name = str_replace('headless-ecom_', '', $model->getTable());
+
+        $name = str_replace(
+            config('headless-ecom.database.table_prefix'),
+            '', $model->getTable()
+        );
 
         return config('scout.prefix').$name;
     }

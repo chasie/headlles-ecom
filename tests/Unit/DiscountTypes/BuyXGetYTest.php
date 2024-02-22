@@ -16,8 +16,8 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.discounts
- * @group lunar.discounts.products
+ * @group headless-ecom.discounts
+ * @group headless-ecom.discounts.products
  */
 class BuyXGetYTest extends TestCase
 {
@@ -43,7 +43,7 @@ class BuyXGetYTest extends TestCase
         );
     }
 
-    public function provideRewardChecks()
+    public static function provideRewardChecks(): array
     {
         return [
             [

@@ -13,13 +13,15 @@ class CreateCustomerGroupsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'customer_groups', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('handle')->unique();
-            $table->boolean('default')->default(false)->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'customer_groups')) {
+            Schema::create($this->prefix.'customer_groups', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('handle')->unique();
+                $table->boolean('default')->default(false)->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

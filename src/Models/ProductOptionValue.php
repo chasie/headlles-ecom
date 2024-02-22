@@ -9,6 +9,9 @@ use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Base\Traits\HasMedia;
 use HeadlessEcom\Base\Traits\HasTranslations;
 use HeadlessEcom\Database\Factories\ProductOptionValueFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -16,8 +19,8 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property int $product_option_id
  * @property string $name
  * @property int $position
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class ProductOptionValue extends BaseModel implements SpatieHasMedia
 {
@@ -51,7 +54,7 @@ class ProductOptionValue extends BaseModel implements SpatieHasMedia
      */
     protected $guarded = [];
 
-    protected function setNameAttribute($value)
+    protected function setNameAttribute($value): void
     {
         $this->attributes['name'] = json_encode($value);
     }
@@ -61,11 +64,17 @@ class ProductOptionValue extends BaseModel implements SpatieHasMedia
         return json_decode($value);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function option(): BelongsTo
     {
         return $this->belongsTo(ProductOption::class, 'product_option_id');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function variants(): BelongsToMany
     {
         $prefix = config('headless-ecom.database.table_prefix');

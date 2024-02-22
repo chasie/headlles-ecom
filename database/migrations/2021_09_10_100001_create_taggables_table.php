@@ -8,12 +8,14 @@ class CreateTaggablesTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'taggables', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('tag_id')->constrained($this->prefix.'tags');
-            $table->morphs('taggable');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'taggables')) {
+            Schema::create($this->prefix.'taggables', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->foreignId('tag_id')->constrained($this->prefix.'tags');
+                $table->morphs('taggable');
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

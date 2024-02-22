@@ -11,8 +11,8 @@ class InstallHeadlessEcomTest extends TestCase
     /** @test */
     public function install_command_copies_the_configuration()
     {
-        // $configFiles = array_keys(config('lunar'));
-        // $configPath = config_path('lunar');
+        // $configFiles = array_keys(config(headless-ecom'));
+        // $configPath = config_path(headless-ecom');
 
         // if (! File::exists($configPath)) {
         //     File::makeDirectory($configPath);
@@ -20,13 +20,13 @@ class InstallHeadlessEcomTest extends TestCase
 
         // // make sure we're starting from a clean state
         // foreach ($configFiles as $filename) {
-        //     if (File::exists(config_path("lunar/$filename.php"))) {
+        //     if (File::exists(config_path("headless-ecom/$filename.php"))) {
         //         unlink("$configPath/$filename.php");
         //     }
         //     $this->assertFalse(File::exists("$configPath/$filename.php"));
         // }
 
-        // Artisan::call('lunar:install');
+        // Artisan::call(headless-ecom:install');
 
         // foreach ($configFiles as $filename) {
         //     $this->assertTrue(File::exists("$configPath/$filename.php"));
@@ -39,7 +39,7 @@ class InstallHeadlessEcomTest extends TestCase
     public function when_config_is_present_users_can_choose_to_not_overwrite_it()
     {
         // // Given we have already have an existing config file
-        // $configPath = config_path('lunar');
+        // $configPath = config_path(headless-ecom');
 
         // if (! File::exists($configPath)) {
         //     File::makeDirectory($configPath);
@@ -50,7 +50,7 @@ class InstallHeadlessEcomTest extends TestCase
         // $this->assertTrue(File::exists("$configPath/database.php"));
 
         // // When we run the install command
-        // $command = $this->artisan('lunar:install');
+        // $command = $this->artisan(headless-ecom:install');
 
         // // We expect a warning that our configuration file exists
         // $command->expectsConfirmation(
@@ -64,10 +64,10 @@ class InstallHeadlessEcomTest extends TestCase
         // $command->execute();
 
         // // Assert that the original contents of the config file remain
-        // $this->assertEquals('<?php return [];', file_get_contents(config_path('lunar/database.php')));
+        // $this->assertEquals('<?php return [];', file_get_contents(config_path(headless-ecom/database.php')));
 
         // // Clean up
-        // unlink(config_path('lunar/database.php'));
+        // unlink(config_path(headless-ecom/database.php'));
 
         // These break tests on actions atm..
         $this->assertTrue(true);
@@ -77,8 +77,8 @@ class InstallHeadlessEcomTest extends TestCase
     public function when_a_config_file_is_present_users_can_choose_to_do_overwrite_it()
     {
         // // Given we have already have an existing config file
-        // $configPath = config_path('lunar');
-        // $configFiles = array_keys(config('lunar'));
+        // $configPath = config_path(headless-ecom');
+        // $configFiles = array_keys(config(headless-ecom'));
 
         // if (! File::exists($configPath)) {
         //     File::makeDirectory($configPath);
@@ -89,7 +89,7 @@ class InstallHeadlessEcomTest extends TestCase
         // $this->assertTrue(File::exists("$configPath/database.php"));
 
         // // When we run the install command
-        // $command = $this->artisan('lunar:install');
+        // $command = $this->artisan(headless-ecom:install');
 
         // // We expect a warning that our configuration file exists
         // $command->expectsConfirmation(
@@ -106,10 +106,10 @@ class InstallHeadlessEcomTest extends TestCase
         // foreach ($configFiles as $filename) {
         //     $this->assertEquals(
         //         file_get_contents(__DIR__."/../../../config/$filename.php"),
-        //         file_get_contents(config_path("lunar/$filename.php"))
+        //         file_get_contents(config_path("headless-ecom/$filename.php"))
         //     );
         //     // Clean up
-        //     unlink(config_path("lunar/$filename.php"));
+        //     unlink(config_path("headless-ecom/$filename.php"));
         // }
         // These break tests on actions atm..
         $this->assertTrue(true);

@@ -4,6 +4,7 @@ namespace HeadlessEcom\Exceptions\Carts;
 
 use Exception;
 use Illuminate\Contracts\Support\MessageBag;
+use Illuminate\Contracts\Validation\Validator;
 
 class CartException extends Exception
 {
@@ -24,7 +25,7 @@ class CartException extends Exception
      * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @return string
      */
-    protected static function summarize($messageBag)
+    protected static function summarize($messageBag): string
     {
         $messages = $messageBag->all();
 
@@ -35,7 +36,7 @@ class CartException extends Exception
         $message = array_shift($messages);
 
         if ($count = count($messages)) {
-            $pluralized = $count === 1 ? 'error' : 'errors';
+            $pluralized = $count === 1 ? 'ошибка' : 'ошибки';
 
             $message .= ' '.__("(and :count more $pluralized)", compact('count'));
         }
@@ -43,7 +44,7 @@ class CartException extends Exception
         return $message;
     }
 
-    public function errors()
+    public function errors(): ?MessageBag
     {
         return $this->messageBag;
     }

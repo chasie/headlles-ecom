@@ -12,7 +12,7 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.actions
+ * @group headless-ecom.actions
  */
 class SortProductsByPriceTest extends TestCase
 {

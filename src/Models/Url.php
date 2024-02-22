@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\UrlFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -14,8 +18,8 @@ use HeadlessEcom\Database\Factories\UrlFactory;
  * @property int $element_id
  * @property string $slug
  * @property bool $default
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Url extends BaseModel
 {
@@ -49,7 +53,7 @@ class Url extends BaseModel
     /**
      * Return the element relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function element(): MorphTo
     {
@@ -59,7 +63,7 @@ class Url extends BaseModel
     /**
      * Return the language relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function language(): BelongsTo
     {
@@ -69,10 +73,10 @@ class Url extends BaseModel
     /**
      * Return the query scope for default.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return \Illuminate\Database\Query\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
-    public function scopeDefault($query): Builder
+    public function scopeDefault(Builder $query): Builder
     {
         return $query->whereDefault(true);
     }

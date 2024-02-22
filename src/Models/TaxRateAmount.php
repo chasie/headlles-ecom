@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\TaxRateAmountFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property ?int $tax_class_id
  * @property ?int $tax_rate_id
  * @property float $percentage
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class TaxRateAmount extends BaseModel
 {
-    use HasFactory,
-        HasMacros;
+    use HasFactory, HasMacros;
 
     /**
      * The tax rate amount.
@@ -46,7 +47,7 @@ class TaxRateAmount extends BaseModel
     /**
      * Return the tax rate relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function taxRate(): BelongsTo
     {
@@ -56,7 +57,7 @@ class TaxRateAmount extends BaseModel
     /**
      * Return the tax class relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function taxClass(): BelongsTo
     {

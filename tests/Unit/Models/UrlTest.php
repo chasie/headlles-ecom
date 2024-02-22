@@ -33,7 +33,8 @@ class UrlTest extends TestCase
 
         Url::create($data);
 
-        $this->assertDatabaseHas('lunar_urls', $data);
+        $prefix = config('headless-ecom.database.table_prefix');
+        $this->assertDatabaseHas("{$prefix}urls", $data);
     }
 
     /** @test */

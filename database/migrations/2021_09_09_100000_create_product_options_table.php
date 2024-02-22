@@ -8,11 +8,16 @@ class CreateProductOptionsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'product_options', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->json('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'product_options')) {
+            Schema::create($this->prefix.'product_options', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->json('name');
+                $table->json('label')->nullable();
+                $table->string('handle')->unique()->nullable();
+                $table->integer('position')->default(0)->index();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

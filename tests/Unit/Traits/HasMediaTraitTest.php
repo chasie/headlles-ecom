@@ -18,7 +18,7 @@ class HasMediaTraitTest extends TestCase
     /** @test */
     public function conversions_are_loaded()
     {
-        $conversions = config('lunar.media.conversions');
+        $conversions = config('headless-ecom.media.conversions');
 
         $this->assertCount(1, $conversions);
 
@@ -42,7 +42,7 @@ class HasMediaTraitTest extends TestCase
     public function images_can_have_fallback_url()
     {
         $testImageUrl = 'https://picsum.photos/200';
-        config()->set('lunar.media.fallback.url', $testImageUrl);
+        config()->set('headless-ecom.media.fallback.url', $testImageUrl);
 
         $product = Product::factory()->create();
 
@@ -53,7 +53,7 @@ class HasMediaTraitTest extends TestCase
     public function images_can_have_fallback_path()
     {
         $testImagePath = public_path('test.jpg');
-        config()->set('lunar.media.fallback.path', $testImagePath);
+        config()->set('headless-ecom.media.fallback.path', $testImagePath);
 
         $product = Product::factory()->create();
 

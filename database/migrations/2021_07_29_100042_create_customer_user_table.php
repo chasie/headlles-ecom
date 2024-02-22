@@ -13,12 +13,14 @@ class CreateCustomerUserTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'customer_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_id')->constrained($this->prefix.'customers');
-            $table->userForeignKey();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'customer_user')) {
+            Schema::create($this->prefix.'customer_user', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('customer_id')->constrained($this->prefix.'customers');
+                $table->userForeignKey();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

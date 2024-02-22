@@ -11,8 +11,8 @@ use HeadlessEcom\Tests\TestCase;
 use HeadlessEcom\Validation\Cart\ValidateCartForOrderCreation;
 
 /**
- * @group lunar.actions
- * @group lunar.validation.cart
+ * @group headless-ecom.actions
+ * @group headless-ecom.validation.cart
  */
 class ValidateCartForOrderCreationTest extends TestCase
 {
@@ -29,12 +29,12 @@ class ValidateCartForOrderCreationTest extends TestCase
             'currency_id' => $currency->id,
         ]);
 
-        $validator = (new ValidateCartForOrderCreation)->using(
+        $validator = (new ValidateCartForOrderCreation)
+            ->using(
             cart: $cart
         );
-
         $this->expectException(CartException::class);
-        $this->expectExceptionMessage(__('lunar::exceptions.carts.billing_missing'));
+        $this->expectExceptionMessage(__('headless-ecom::exceptions/cart.billing-missing'));
 
         $validator->validate();
     }

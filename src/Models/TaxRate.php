@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\TaxRateFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property ?int $tax_zone_id
  * @property bool $priority
  * @property string $name
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class TaxRate extends BaseModel
 {
-    use HasFactory,
-        HasMacros;
+    use HasFactory, HasMacros;
 
     /**
      * Return a new factory instance for the model.
@@ -39,7 +41,7 @@ class TaxRate extends BaseModel
     /**
      * Return the tax zone relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function taxZone(): BelongsTo
     {
@@ -49,7 +51,7 @@ class TaxRate extends BaseModel
     /**
      * Return the tax rate amounts relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function taxRateAmounts(): HasMany
     {

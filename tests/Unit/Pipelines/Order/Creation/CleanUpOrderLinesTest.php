@@ -17,7 +17,7 @@ use HeadlessEcom\Pipelines\Order\Creation\CleanUpOrderLines;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.orders.pipelines
+ * @group headless-ecom.orders.pipelines
  */
 class CleanUpOrderLinesTest extends TestCase
 {

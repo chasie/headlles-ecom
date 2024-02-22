@@ -13,15 +13,17 @@ class CreateTaxZonesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'tax_zones', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('zone_type')->index();
-            $table->string('price_display');
-            $table->boolean('active')->index();
-            $table->boolean('default')->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'tax_zones')) {
+            Schema::create($this->prefix.'tax_zones', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('zone_type')->index();
+                $table->string('price_display');
+                $table->boolean('active')->index();
+                $table->boolean('default')->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

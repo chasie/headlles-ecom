@@ -25,73 +25,94 @@ class EnsureBrandsAreUpgradedTest extends TestCase
     {
         Storage::fake('local');
 
-        Language::factory()->create([
-            'default' => true,
-        ]);
-
-        $prefix = config('lunar.database.table_prefix');
-        Schema::dropIfExists("{$prefix}brands");
-
-        Schema::table("{$prefix}products", function ($table) {
-            $table->dropColumn('brand_id');
-        });
-
-        Schema::table("{$prefix}products", function ($table) {
-            $table->string('brand')->nullable();
-        });
-
-        DB::table('migrations')->whereIn('migration', [
-            '2022_08_09_100001_create_brands_table',
-            '2022_08_09_100002_add_brand_id_to_products_table',
-        ])->delete();
-
+        Language::factory()->create(
+            [
+                'default' => true,
+            ]
+        );
         $productType = ProductType::factory()->create();
 
-        $pa = Product::forceCreate([
-            'brand' => 'Brand A',
-            'product_type_id' => $productType->id,
-            'status' => 'published',
-            'attribute_data' => collect([
-                'name' => new Text('Product A'),
-            ]),
-        ]);
+        $brandA = Brand::forceCreate(
+            [
+                'name'           => 'Brand A',
+                'attribute_data' => collect(
+                    [
+                        'name' => new Text('Brand A'),
+                    ]
+                ),
+            ]
+        );
+        $brandB = Brand::forceCreate(
+            [
+                'name'           => 'Brand B',
+                'attribute_data' => collect(
+                    [
+                        'name' => new Text('Brand B'),
+                    ]
+                ),
+            ]
+        );
 
-        $pb = Product::forceCreate([
-            'brand' => 'Brand A',
-            'product_type_id' => $productType->id,
-            'status' => 'published',
-            'attribute_data' => collect([
-                'name' => new Text('Product B'),
-            ]),
-        ]);
+        $productA = Product::forceCreate(
+            [
+                'brand_id'        => $brandA->id,
+                'product_type_id' => $productType->id,
+                'status'          => 'published',
+                'attribute_data'  => collect(
+                    [
+                        'name' => new Text('Product A'),
+                    ]
+                ),
+            ]
+        );
 
-        $pc = Product::forceCreate([
-            'brand' => 'Brand B',
-            'product_type_id' => $productType->id,
-            'status' => 'published',
-            'attribute_data' => collect([
-                'name' => new Text('Product C'),
-            ]),
-        ]);
+        $productB = Product::forceCreate(
+            [
+                'brand_id'        => $brandA->id,
+                'product_type_id' => $productType->id,
+                'status'          => 'published',
+                'attribute_data'  => collect(
+                    [
+                        'name' => new Text('Product B'),
+                    ]
+                ),
+            ]
+        );
 
-        $this->assertDatabaseHas((new Product)->getTable(), [
-            'brand' => 'Brand A',
-        ]);
+        $productC = Product::forceCreate(
+            [
+                'brand_id'        => $brandB->id,
+                'product_type_id' => $productType->id,
+                'status'          => 'published',
+                'attribute_data'  => collect(
+                    [
+                        'name' => new Text('Product C'),
+                    ]
+                ),
+            ]
+        );
 
-        $this->artisan('migrate');
+        $this->assertDatabaseHas(
+            (new Brand)->getTable(),
+            [
+                'name' => 'Brand A',
+            ]
+        );
 
-        $this->assertDatabaseHas((new Brand)->getTable(), [
-            'name' => 'Brand A',
-        ]);
+        $this->assertDatabaseHas(
+            (new Brand)->getTable(),
+            [
+                'name' => 'Brand B',
+            ]
+        );
 
-        $this->assertDatabaseHas((new Brand)->getTable(), [
-            'name' => 'Brand B',
-        ]);
-
-        $brandA = Brand::whereName('Brand A')->first();
-        $brandB = Brand::whereName('Brand B')->first();
-
-        $this->assertCount(2, Product::whereBrandId($brandA->id)->get());
-        $this->assertCount(1, Product::whereBrandId($brandB->id)->get());
+        $this->assertCount(
+            2,
+            Product::whereBrandId($brandA->id)->get()
+        );
+        $this->assertCount(
+            1,
+            Product::whereBrandId($brandB->id)->get()
+        );
     }
 }

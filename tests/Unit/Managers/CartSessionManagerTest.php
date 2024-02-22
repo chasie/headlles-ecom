@@ -15,7 +15,7 @@ use HeadlessEcom\Models\Order;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.cart-session-manager
+ * @group headless-ecom.cart-session-manager
  */
 class CartSessionManagerTest extends TestCase
 {
@@ -45,19 +45,19 @@ class CartSessionManagerTest extends TestCase
             'default' => true,
         ]);
 
-        Config::set('lunar.cart.auto_create', false);
+        Config::set('headless-ecom.cart.auto_create', false);
 
         $cart = $manager->current();
 
         $this->assertNull($cart);
 
-        Config::set('lunar.cart.auto_create', true);
+        Config::set('headless-ecom.cart.auto_create', true);
 
         $cart = $manager->current();
 
         $this->assertInstanceOf(Cart::class, $cart);
 
-        $sessionCart = Session::get(config('lunar.cart.session_key'));
+        $sessionCart = Session::get(config('headless-ecom.cart.session_key'));
 
         $this->assertNotNull($sessionCart);
         $this->assertEquals($cart->id, $sessionCart);
@@ -76,7 +76,7 @@ class CartSessionManagerTest extends TestCase
             'default' => true,
         ]);
 
-        Config::set('lunar.cart.auto_create', true);
+        Config::set('headless-ecom.cart.auto_create', true);
 
         $cart = CartSession::current();
 
@@ -93,7 +93,7 @@ class CartSessionManagerTest extends TestCase
         $cart->setShippingAddress($shipping);
         $cart->setBillingAddress($billing);
 
-        $sessionCart = Session::get(config('lunar.cart.session_key'));
+        $sessionCart = Session::get(config('headless-ecom.cart.session_key'));
 
         $this->assertNotNull($sessionCart);
         $this->assertEquals($cart->id, $sessionCart);
@@ -104,7 +104,7 @@ class CartSessionManagerTest extends TestCase
         $this->assertEquals($order->cart_id, $cart->id);
 
         $this->assertNull(
-            Session::get(config('lunar.cart.session_key'))
+            Session::get(config('headless-ecom.cart.session_key'))
         );
     }
 
@@ -121,7 +121,7 @@ class CartSessionManagerTest extends TestCase
             'default' => true,
         ]);
 
-        Config::set('lunar.cart.auto_create', true);
+        Config::set('headless-ecom.cart.auto_create', true);
 
         $cart = CartSession::current();
 
@@ -138,7 +138,7 @@ class CartSessionManagerTest extends TestCase
         $cart->setShippingAddress($shipping);
         $cart->setBillingAddress($billing);
 
-        $sessionCart = Session::get(config('lunar.cart.session_key'));
+        $sessionCart = Session::get(config('headless-ecom.cart.session_key'));
 
         $this->assertNotNull($sessionCart);
         $this->assertEquals($cart->id, $sessionCart);
@@ -152,7 +152,7 @@ class CartSessionManagerTest extends TestCase
 
         $this->assertEquals(
             $cart->id,
-            Session::get(config('lunar.cart.session_key'))
+            Session::get(config('headless-ecom.cart.session_key'))
         );
     }
 

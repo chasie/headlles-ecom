@@ -13,14 +13,16 @@ class CreateCollectionCustomerGroupTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'collection_customer_group', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('collection_id')->constrained($this->prefix.'collections');
-            $table->foreignId('customer_group_id')->constrained($this->prefix.'customer_groups');
-            $table->scheduling();
-            $table->boolean('visible')->default(true)->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'collection_customer_group')) {
+            Schema::create($this->prefix.'collection_customer_group', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('collection_id')->constrained($this->prefix.'collections');
+                $table->foreignId('customer_group_id')->constrained($this->prefix.'customer_groups');
+                $table->scheduling();
+                $table->boolean('visible')->default(true)->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

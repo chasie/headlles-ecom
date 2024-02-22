@@ -8,7 +8,7 @@ use HeadlessEcom\Models\Product;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.traits
+ * @group headless-ecom.traits
  */
 class HasChannelsTest extends TestCase
 {

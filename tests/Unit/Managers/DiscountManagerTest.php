@@ -23,8 +23,8 @@ use HeadlessEcom\Tests\Stubs\TestDiscountType;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.discounts
- * @group lunar.discounts.managers
+ * @group headless-ecom.discounts
+ * @group headless-ecom.discounts.managers
  */
 class DiscountManagerTest extends TestCase
 {

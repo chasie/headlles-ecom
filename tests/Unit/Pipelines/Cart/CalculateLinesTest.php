@@ -11,7 +11,7 @@ use HeadlessEcom\Pipelines\Cart\CalculateLines;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.carts.pipelines
+ * @group headless-ecom.carts.pipelines
  */
 class CalculateLinesTest extends TestCase
 {
@@ -25,52 +25,64 @@ class CalculateLinesTest extends TestCase
     {
         $currency = Currency::factory()->create();
 
-        $cart = Cart::factory()->create([
-            'currency_id' => $currency->id,
-        ]);
+        $cart = Cart::factory()->create(
+            [
+                'currency_id' => $currency->id,
+            ]
+        );
 
-        $purchasable = ProductVariant::factory()->create([
-            'unit_quantity' => $unitQuantity,
-        ]);
+        $purchasable = ProductVariant::factory()->create(
+            [
+                'unit_quantity' => $unitQuantity,
+            ]
+        );
 
-        Price::factory()->create([
-            'price' => $incomingUnitPrice,
-            'tier' => 1,
-            'currency_id' => $currency->id,
-            'priceable_type' => get_class($purchasable),
-            'priceable_id' => $purchasable->id,
-        ]);
+        Price::factory()->create(
+            [
+                'price'          => $incomingUnitPrice,
+                'tier'           => 1,
+                'currency_id'    => $currency->id,
+                'priceable_type' => get_class($purchasable),
+                'priceable_id'   => $purchasable->id,
+            ]
+        );
 
-        $cart->lines()->create([
-            'purchasable_type' => get_class($purchasable),
-            'purchasable_id' => $purchasable->id,
-            'quantity' => 1,
-        ]);
+        $cart->lines()->create(
+            [
+                'purchasable_type' => get_class($purchasable),
+                'purchasable_id'   => $purchasable->id,
+                'quantity'         => 1,
+            ]
+        );
 
 
-        $cart = app(CalculateLines::class)->handle($cart, function ($cart) {
-            return $cart;
-        });
+        $cart = app(CalculateLines::class)
+            ->handle(
+                $cart, function ($cart)
+            {
+                return $cart;
+            }
+            );
 
         $cartLine = $cart->lines->first();
 
         $this->assertEquals($cartLine->subTotal->unitDecimal, $expectedUnitPrice);
     }
 
-    public function providePurchasableData()
+    public static function providePurchasableData(): array
     {
         return [
-            'purchasable with 1 unit quantity' => [
+            'purchasable with 1 unit quantity'           => [
                 '1.00',
                 '100',
                 '1',
             ],
-            'purchasable with 10 unit quantity' => [
+            'purchasable with 10 unit quantity'          => [
                 '0.10',
                 '100',
                 '10',
             ],
-            'purchasable with 100 unit quantity' => [
+            'purchasable with 100 unit quantity'         => [
                 '0.01',
                 '100',
                 '100',

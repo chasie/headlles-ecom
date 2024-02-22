@@ -28,7 +28,9 @@
         "spatie/image": "^3.3",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-blink": "^1.6",
-        "spatie/laravel-medialibrary": "^11.0.0"
+        "spatie/laravel-medialibrary": "^11.0.0",
+        "lunarphp/scout-database-engine": "self.version",
+        "lukascivil/treewalker": "0.9.1"
     },
     "require-dev": {
         "orchestra/testbench": "^8.0",
@@ -40,7 +42,10 @@
             "HeadlessEcom\\Database\\Factories\\": "database/factories",
             "HeadlessEcom\\Database\\Seeders\\": "database/seeders",
             "HeadlessEcom\\Database\\State\\": "database/state"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

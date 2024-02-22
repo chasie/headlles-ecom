@@ -3,7 +3,7 @@
 namespace HeadlessEcom\Base\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -46,7 +46,7 @@ trait HasMedia
 
         // Add a conversion that the hub uses...
         $this->addMediaConversion('small')
-            ->fit(Manipulations::FIT_FILL, 300, 300)
+            ->fit(Fit::Fill, 300, 300)
             ->sharpen(10)
             ->keepOriginalImageFormat();
     }

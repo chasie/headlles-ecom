@@ -16,7 +16,7 @@ use HeadlessEcom\Tests\Stubs\User as StubUser;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.storefront-session-manager
+ * @group headless-ecom.storefront-session-manager
  */
 class StorefrontSessionManagerTest extends TestCase
 {

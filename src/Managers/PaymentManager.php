@@ -25,7 +25,7 @@ class PaymentManager extends Manager
     {
         $originalDriver = $driver;
 
-        $type = config("HeadlessEcom.payments.types.{$driver}");
+        $type = config("headless-ecom.payments.types.{$driver}");
 
         $driver = $type['driver'] ?? $originalDriver;
 

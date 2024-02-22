@@ -13,11 +13,17 @@ class CreateTaxClassesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'tax_classes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'tax_classes')) {
+            Schema::create($this->prefix.'tax_classes', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table
+                    ->boolean('default')
+                    ->default(false)
+                    ->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

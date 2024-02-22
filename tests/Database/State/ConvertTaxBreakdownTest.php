@@ -21,6 +21,8 @@ class ConvertTaxBreakdownTest extends TestCase
     /** @test */
     public function can_run()
     {
+        $prefix = config('headless-ecom.database.table_prefix');
+
         Storage::fake('local');
 
         Language::factory()->create([
@@ -35,7 +37,7 @@ class ConvertTaxBreakdownTest extends TestCase
             'code' => 'GBP',
         ]);
 
-        DB::table('lunar_orders')->insert([
+        DB::table("{$prefix}orders")->insert([
             'channel_id' => $channel->id,
             'new_customer' => false,
             'user_id' => null,
@@ -56,7 +58,7 @@ class ConvertTaxBreakdownTest extends TestCase
 
         (new ConvertTaxbreakdown)->run();
 
-        $this->assertDatabaseHas('lunar_orders', [
+        $this->assertDatabaseHas("{$prefix}orders", [
             'tax_breakdown' => '[{"description":"VAT","identifier":"tax_rate_1","percentage":20,"value":333,"currency_code":"GBP"}]',
         ]);
 

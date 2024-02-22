@@ -10,7 +10,7 @@ use HeadlessEcom\Models\OrderAddress;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.jobs.orders
+ * @group headless-ecom.jobs.orders
  */
 class MarkAsNewCustomerTest extends TestCase
 {

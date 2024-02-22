@@ -13,12 +13,14 @@ class CreateTaxZoneCountriesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'tax_zone_countries', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tax_zone_id')->nullable()->constrained($this->prefix.'tax_zones');
-            $table->foreignId('country_id')->nullable()->constrained($this->prefix.'countries');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'tax_zone_countries')) {
+            Schema::create($this->prefix.'tax_zone_countries', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('tax_zone_id')->nullable()->constrained($this->prefix.'tax_zones');
+                $table->foreignId('country_id')->nullable()->constrained($this->prefix.'countries');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

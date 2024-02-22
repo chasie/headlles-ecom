@@ -11,13 +11,12 @@ class GenerateOrderReference
     /**
      * Execute the action.
      *
-     * @param  CartLine  $cartLine
-     * @param  Collection  $customerGroups
-     * @return null|CartLine
+     * @param  Order  $order
+     * @return null|string
      */
     public function execute(
         Order $order
-    ): ?CartLine {
+    ): ?string {
         $generator = config('headless-ecom.orders.reference_generator');
 
         if (! $generator) {

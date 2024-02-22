@@ -13,7 +13,7 @@ use HeadlessEcom\Models\Order;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.payment-types
+ * @group headless-ecom.payment-types
  */
 class OfflinePaymentTypeTest extends TestCase
 {
@@ -24,7 +24,7 @@ class OfflinePaymentTypeTest extends TestCase
     {
         $cart = Cart::factory()->create();
 
-        Config::set('lunar.payments.types.offline', [
+        Config::set('headless-ecom.payments.types.offline', [
             'authorized' => 'offline-payment',
         ]);
 
@@ -61,7 +61,7 @@ class OfflinePaymentTypeTest extends TestCase
     {
         $cart = Cart::factory()->create();
 
-        Config::set('lunar.payments.types.offline', [
+        Config::set('headless-ecom.payments.types.offline', [
             'authorized' => 'offline-payment',
         ]);
 
@@ -99,7 +99,7 @@ class OfflinePaymentTypeTest extends TestCase
     {
         $cart = Cart::factory()->create();
 
-        Config::set('lunar.payments.types.offline', [
+        Config::set('headless-ecom.payments.types.offline', [
             'authorized' => 'offline-payment',
         ]);
 

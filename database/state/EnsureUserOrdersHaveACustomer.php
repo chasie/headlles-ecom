@@ -13,7 +13,7 @@ class EnsureUserOrdersHaveACustomer
         //
     }
 
-    public function run()
+    public function run(): void
     {
         if (! $this->canRun()) {
             return;
@@ -35,7 +35,7 @@ class EnsureUserOrdersHaveACustomer
         });
     }
 
-    protected function canRun()
+    protected function canRun(): bool
     {
         $prefix = config('headless-ecom.database.table_prefix');
 

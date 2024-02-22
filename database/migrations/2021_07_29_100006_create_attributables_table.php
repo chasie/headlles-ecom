@@ -13,12 +13,14 @@ class CreateAttributablesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'attributables', function (Blueprint $table) {
-            $table->id();
-            $table->morphs('attributable');
-            $table->foreignId('attribute_id')->constrained($this->prefix.'attributes');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'attributables')) {
+            Schema::create($this->prefix.'attributables', function (Blueprint $table) {
+                $table->id();
+                $table->morphs('attributable');
+                $table->foreignId('attribute_id')->constrained($this->prefix.'attributes');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

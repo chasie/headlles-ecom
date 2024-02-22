@@ -9,7 +9,7 @@ use HeadlessEcom\Models\TaxZonePostcode;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class TaxZonePostcodeTest extends TestCase
 {

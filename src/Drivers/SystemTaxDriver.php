@@ -99,37 +99,49 @@ class SystemTaxDriver implements TaxDriver
         $taxZone = app(GetTaxZone::class)->execute($this->shippingAddress);
         $taxClass = $this->purchasable->getTaxClass();
 
-        $taxAmounts = Blink::once('tax_zone_rates_'.$taxZone->id.'_'.$taxClass->id, function () use ($taxClass, $taxZone) {
-            return $taxZone->taxAmounts()->whereTaxClassId($taxClass->id)->get();
-        });
+        $taxAmounts = Blink::once(
+            'tax_zone_rates_'.$taxZone->id.'_'.$taxClass->id,
+            function () use ($taxClass, $taxZone)
+            {
+                return $taxZone
+                    ->taxAmounts()
+                    ->whereTaxClassId($taxClass->id)
+                    ->get();
+            }
+        );
 
-        if (prices_inc_tax()) {
+        if (prices_inc_tax())
+        {
             // Remove tax from price
             $totalTaxPercentage = $taxAmounts->sum('percentage') / 100; // E.g. 0.2 for 20%
             $priceExTax = round($subTotal / (1 + $totalTaxPercentage));
 
             // Check to see if the included tax uses the same tax zone
-            if ($this->defaultTaxZone()->id === $taxZone->id) {
+            if ($this->defaultTaxZone()->id === $taxZone->id)
+            {
                 // Manually return the tax breakdown
                 $breakdown = new TaxBreakdown;
 
                 $taxTally = 0;
 
-                foreach ($taxAmounts as $key => $amount) {
-                    if ($taxAmounts->keys()->last() == $key) {
+                foreach ($taxAmounts as $key => $amount)
+                {
+                    if ($taxAmounts->keys()->last() == $key)
+                    {
                         // Ensure the final tax amount adds up to the original price
                         $result = $subTotal - $priceExTax - $taxTally;
-                    } else {
+                    } else
+                    {
                         $result = round($priceExTax * ($amount->percentage / 100));
                     }
 
                     $taxTally += $result;
 
                     $amount = new TaxBreakdownAmount(
-                        price: new Price((int) $result, $this->currency, $this->purchasable->getUnitQuantity()),
+                        price      : new Price((int) $result, $this->currency, $this->purchasable->getUnitQuantity()),
                         description: $amount->taxRate->name,
-                        identifier: "tax_rate_{$amount->taxRate->id}",
-                        percentage: $amount->percentage
+                        identifier : "tax_rate_{$amount->taxRate->id}",
+                        percentage : $amount->percentage
                     );
                     $breakdown->addAmount($amount);
                 }
@@ -143,14 +155,15 @@ class SystemTaxDriver implements TaxDriver
 
         $breakdown = new TaxBreakdown;
 
-        foreach ($taxAmounts as $amount) {
+        foreach ($taxAmounts as $amount)
+        {
             $result = round($subTotal * ($amount->percentage / 100));
 
             $amount = new TaxBreakdownAmount(
-                price: new Price((int) $result, $this->currency, $this->purchasable->getUnitQuantity()),
+                price      : new Price((int) $result, $this->currency, $this->purchasable->getUnitQuantity()),
                 description: $amount->taxRate->name,
-                identifier: "tax_rate_{$amount->taxRate->id}",
-                percentage: $amount->percentage
+                identifier : "tax_rate_{$amount->taxRate->id}",
+                percentage : $amount->percentage
             );
             $breakdown->addAmount($amount);
         }

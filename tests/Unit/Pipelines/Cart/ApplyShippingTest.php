@@ -18,7 +18,7 @@ use HeadlessEcom\Pipelines\Cart\ApplyShipping;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.carts.pipelines
+ * @group headless-ecom.carts.pipelines
  */
 class ApplyShippingTest extends TestCase
 {

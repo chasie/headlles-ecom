@@ -13,7 +13,7 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.orderlines
+ * @group headless-ecom.orderlines
  */
 class OrderLineTest extends TestCase
 {

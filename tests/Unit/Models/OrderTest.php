@@ -20,7 +20,7 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.orders
+ * @group headless-ecom.orders
  */
 class OrderTest extends TestCase
 {

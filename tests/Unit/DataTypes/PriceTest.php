@@ -10,7 +10,7 @@ use HeadlessEcom\Tests\TestCase;
 use NumberFormatter;
 
 /**
- * @group lunar.datatypes
+ * @group headless-ecom.datatypes
  */
 class PriceTest extends TestCase
 {

@@ -19,8 +19,8 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.discounts
- * @group lunar.discounts.discounts
+ * @group headless-ecom.discounts
+ * @group headless-ecom.discounts.discounts
  */
 class AmountOffTest extends TestCase
 {

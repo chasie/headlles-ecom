@@ -8,7 +8,7 @@ use HeadlessEcom\Models\Url;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class LanguageTest extends TestCase
 {

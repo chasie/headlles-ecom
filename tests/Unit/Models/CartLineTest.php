@@ -12,7 +12,7 @@ use HeadlessEcom\Tests\Stubs\User;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.cartlines
+ * @group headless-ecom.cartlines
  */
 class CartLineTest extends TestCase
 {

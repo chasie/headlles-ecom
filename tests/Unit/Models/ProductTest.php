@@ -17,7 +17,7 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.products
+ * @group headless-ecom.products
  */
 class ProductTest extends TestCase
 {
@@ -110,8 +110,10 @@ class ProductTest extends TestCase
 
         $product->scheduleChannel($channel, $publishDate);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_channelables',
+            "{$prefix}channelables",
             [
                 'channel_id' => $channel->id,
                 'channelable_type' => Product::class,
@@ -121,7 +123,7 @@ class ProductTest extends TestCase
             ],
         );
 
-        $this->assertCount(1, DB::table('lunar_channelables')->get());
+        $this->assertCount(1, DB::table("{$prefix}channelables")->get());
     }
 
     /** @test */
@@ -135,8 +137,10 @@ class ProductTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -155,8 +159,10 @@ class ProductTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -180,8 +186,10 @@ class ProductTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup, $start);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -195,8 +203,10 @@ class ProductTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup, $start, $end);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -222,8 +232,10 @@ class ProductTest extends TestCase
             'purchasable' => 0,
         ]);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -238,7 +250,7 @@ class ProductTest extends TestCase
         $product->scheduleCustomerGroup($customerGroup, $start, $end);
 
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -265,8 +277,10 @@ class ProductTest extends TestCase
 
         $product->scheduleCustomerGroup($customerGroup, $start, $end);
 
+        $prefix = config('headless-ecom.database.table_prefix');
+
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 1,
@@ -283,7 +297,7 @@ class ProductTest extends TestCase
         ]);
 
         $this->assertDatabaseHas(
-            'lunar_customer_group_product',
+            "{$prefix}customer_group_product",
             [
                 'customer_group_id' => $customerGroup->id,
                 'enabled' => 0,

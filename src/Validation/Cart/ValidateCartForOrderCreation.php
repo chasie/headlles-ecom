@@ -16,12 +16,12 @@ class ValidateCartForOrderCreation extends BaseValidator
 
         // Does this cart already have an order?
         if ($cart->completedOrder) {
-            return $this->fail('cart', __('headless-ecom::exceptions.carts.order_exists'));
+            return $this->fail('cart', __('headless-ecom::exceptions/cart.order-exists'));
         }
 
         // Do we have a billing address?
         if (! $cart->billingAddress) {
-            return $this->fail('cart', __('headless-ecom::exceptions.carts.billing_missing'));
+            return $this->fail('cart', __('headless-ecom::exceptions/cart.billing-missing'));
         }
 
         $billingValidator = Validator::make(

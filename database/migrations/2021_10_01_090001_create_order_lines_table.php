@@ -8,26 +8,28 @@ class CreateOrderLinesTable extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->prefix.'order_lines', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('order_id')->constrained($this->prefix.'orders');
-            $table->morphs('purchasable');
-            $table->string('type')->index();
-            $table->string('description');
-            $table->string('option')->nullable();
-            $table->string('identifier')->index();
-            $table->integer('unit_price')->unsigned()->index();
-            $table->smallInteger('unit_quantity')->default(1)->unsigned()->index();
-            $table->smallInteger('quantity')->unsigned();
-            $table->integer('sub_total')->unsigned()->index();
-            $table->integer('discount_total')->default(0)->unsigned()->index();
-            $table->json('tax_breakdown');
-            $table->integer('tax_total')->unsigned()->index();
-            $table->integer('total')->unsigned()->index();
-            $table->text('notes')->nullable();
-            $table->json('meta')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'order_lines')) {
+            Schema::create($this->prefix.'order_lines', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->foreignId('order_id')->constrained($this->prefix.'orders');
+                $table->morphs('purchasable');
+                $table->string('type')->index();
+                $table->string('description');
+                $table->string('option')->nullable();
+                $table->string('identifier')->index();
+                $table->unsignedBigInteger('unit_price')->index();
+                $table->smallInteger('unit_quantity')->default(1)->unsigned()->index();
+                $table->unsignedInteger('quantity')->unsigned();
+                $table->unsignedBigInteger('sub_total')->index();
+                $table->unsignedBigInteger('discount_total')->default(0)->index();
+                $table->json('tax_breakdown');
+                $table->unsignedBigInteger('tax_total')->index();
+                $table->unsignedBigInteger('total')->index();
+                $table->text('notes')->nullable();
+                $table->json('meta')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

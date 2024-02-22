@@ -9,8 +9,8 @@ use HeadlessEcom\Search\OrderIndexer;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
- * @group lunar.search.order
+ * @group headless-ecom.search
+ * @group headless-ecom.search.order
  */
 class OrderIndexerTest extends TestCase
 {

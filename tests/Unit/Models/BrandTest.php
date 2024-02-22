@@ -11,7 +11,7 @@ use HeadlessEcom\Models\Url;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.brands
+ * @group headless-ecom.brands
  */
 class BrandTest extends TestCase
 {
@@ -29,7 +29,7 @@ class BrandTest extends TestCase
     /** @test */
     public function can_generate_url()
     {
-        Config::set('lunar.urls.generator', UrlGenerator::class);
+        Config::set('headless-ecom.urls.generator', UrlGenerator::class);
 
         Language::factory()->create([
             'default' => true,
@@ -49,7 +49,7 @@ class BrandTest extends TestCase
     /** @test */
     public function generates_unique_urls()
     {
-        Config::set('lunar.urls.generator', UrlGenerator::class);
+        Config::set('headless-ecom.urls.generator', UrlGenerator::class);
 
         Language::factory()->create([
             'default' => true,

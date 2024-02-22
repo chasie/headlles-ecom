@@ -12,7 +12,7 @@ use HeadlessEcom\Tests\Stubs\TestTaxDriver;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.taxes
+ * @group headless-ecom.taxes
  */
 class TaxesTest extends TestCase
 {

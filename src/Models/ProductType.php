@@ -7,18 +7,19 @@ use HeadlessEcom\Base\BaseModel;
 use HeadlessEcom\Base\Traits\HasAttributes;
 use HeadlessEcom\Base\Traits\HasMacros;
 use HeadlessEcom\Database\Factories\ProductTypeFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class ProductType extends BaseModel
 {
-    use HasAttributes,
-        HasFactory,
-        HasMacros;
+    use HasAttributes, HasFactory, HasMacros;
 
     /**
      * Return a new factory instance for the model.
@@ -39,7 +40,7 @@ class ProductType extends BaseModel
     /**
      * Get the mapped attributes relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return MorphToMany
      */
     public function mappedAttributes(): MorphToMany
     {
@@ -57,7 +58,7 @@ class ProductType extends BaseModel
     /**
      * Return the product attributes relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return MorphToMany
      */
     public function productAttributes(): MorphToMany
     {
@@ -69,7 +70,7 @@ class ProductType extends BaseModel
     /**
      * Return the variant attributes relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return MorphToMany
      */
     public function variantAttributes(): MorphToMany
     {
@@ -81,7 +82,7 @@ class ProductType extends BaseModel
     /**
      * Get the products relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function products(): HasMany
     {

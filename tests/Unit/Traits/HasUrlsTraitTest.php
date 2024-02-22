@@ -37,7 +37,7 @@ class HasUrlsTraitTest extends TestCase
     {
         Language::factory()->create(['default' => true]);
 
-        Config::set('lunar.urls.generator', UrlGenerator::class);
+        Config::set('headless-ecom.urls.generator', UrlGenerator::class);
 
         $product = Product::factory()->create();
 
@@ -55,7 +55,7 @@ class HasUrlsTraitTest extends TestCase
     {
         Language::factory()->create(['default' => true]);
 
-        Config::set('lunar.urls.generator', UrlGenerator::class);
+        Config::set('headless-ecom.urls.generator', UrlGenerator::class);
 
         $product1 = Product::factory()->create([
             'attribute_data' => collect([

@@ -13,14 +13,16 @@ class CreateAttributeGroupsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'attribute_groups', function (Blueprint $table) {
-            $table->id();
-            $table->string('attributable_type')->index();
-            $table->json('name');
-            $table->string('handle')->unique();
-            $table->integer('position')->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'attribute_groups')) {
+            Schema::create($this->prefix.'attribute_groups', function (Blueprint $table) {
+                $table->id();
+                $table->string('attributable_type')->index();
+                $table->json('name');
+                $table->string('handle')->unique();
+                $table->integer('position')->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

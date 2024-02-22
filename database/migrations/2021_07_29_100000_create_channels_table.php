@@ -13,15 +13,17 @@ class CreateChannelsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'channels', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('handle')->unique();
-            $table->boolean('default')->default(0)->index();
-            $table->string('url')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        if (!Schema::hasTable($this->prefix.'channels')) {
+            Schema::create($this->prefix.'channels', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('handle')->unique();
+                $table->boolean('default')->default(0)->index();
+                $table->string('url')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
     }
 
     /**

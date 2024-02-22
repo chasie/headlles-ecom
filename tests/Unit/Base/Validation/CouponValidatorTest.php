@@ -9,7 +9,7 @@ use HeadlessEcom\Models\Discount;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.discounts.validators
+ * @group headless-ecom.discounts.validators
  */
 class CouponValidatorTest extends TestCase
 {

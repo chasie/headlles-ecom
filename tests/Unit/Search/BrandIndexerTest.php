@@ -12,8 +12,8 @@ use HeadlessEcom\Search\BrandIndexer;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
- * @group lunar.search.brand
+ * @group headless-ecom.search
+ * @group headless-ecom.search.brand
  */
 class BrandIndexerTest extends TestCase
 {

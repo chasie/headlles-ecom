@@ -13,14 +13,17 @@ class CreateChannelablesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'channelables', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('channel_id')->constrained($this->prefix.'channels');
-            $table->morphs('channelable');
-            $table->boolean('enabled')->default(false);
-            $table->datetime('published_at')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'channelables')) {
+            Schema::create($this->prefix.'channelables', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('channel_id')->constrained($this->prefix.'channels');
+                $table->morphs('channelable');
+                $table->boolean('enabled')->default(false);
+                $table->datetime('starts_at')->nullable();
+                $table->datetime('ends_at')->nullable()->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

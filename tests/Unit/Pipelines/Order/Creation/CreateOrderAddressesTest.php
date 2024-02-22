@@ -12,7 +12,7 @@ use HeadlessEcom\Pipelines\Order\Creation\CreateOrderAddresses;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.orders.pipelines
+ * @group headless-ecom.orders.pipelines
  */
 class CreateOrderAddressesTest extends TestCase
 {

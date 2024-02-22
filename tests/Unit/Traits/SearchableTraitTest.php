@@ -26,7 +26,7 @@ class SearchableTraitTest extends TestCase
 
         $this->assertInstanceOf(NullEngine::class, $product->searchableUsing());
 
-        Config::set('lunar.search.engine_map', [
+        Config::set('headless-ecom.search.engine_map', [
             Product::class => 'database',
         ]);
 
@@ -42,7 +42,7 @@ class SearchableTraitTest extends TestCase
         $this->assertInstanceOf(ProductIndexer::class, $product->indexer());
         $this->assertInstanceOf(ScoutIndexer::class, $collection->indexer());
 
-        Config::set('lunar.search.indexers', [
+        Config::set('headless-ecom.search.indexers', [
             Product::class => ScoutIndexer::class,
         ]);
 

@@ -18,7 +18,7 @@ use HeadlessEcom\Models\TaxZone;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.models
+ * @group headless-ecom.models
  */
 class ProductVariantTest extends TestCase
 {
@@ -153,7 +153,7 @@ class ProductVariantTest extends TestCase
     /** @test */
     public function can_get_correct_price_inc_tax_based_on_tax_class()
     {
-        Config::set('lunar.pricing.stored_inclusive_of_tax', false);
+        Config::set('headless-ecom.pricing.stored_inclusive_of_tax', false);
 
         $taxClassGeneric = TaxClass::factory()->create([
             'name' => 'Clothing',

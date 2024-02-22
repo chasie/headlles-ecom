@@ -8,8 +8,8 @@ use HeadlessEcom\Search\ProductOptionIndexer;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.search
- * @group lunar.search.product_option
+ * @group headless-ecom.search
+ * @group headless-ecom.search.product_option
  */
 class ProductOptionIndexerTest extends TestCase
 {

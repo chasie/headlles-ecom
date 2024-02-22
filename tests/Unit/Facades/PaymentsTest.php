@@ -10,7 +10,7 @@ use HeadlessEcom\Tests\Stubs\TestPaymentDriver;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.payments
+ * @group headless-ecom.payments
  */
 class PaymentsTest extends TestCase
 {

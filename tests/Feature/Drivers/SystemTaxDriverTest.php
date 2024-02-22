@@ -18,7 +18,7 @@ use HeadlessEcom\Models\TaxZone;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.taxdriver
+ * @group headless-ecom.taxdriver
  */
 class SystemTaxDriverTest extends TestCase
 {
@@ -126,7 +126,7 @@ class SystemTaxDriverTest extends TestCase
     /** @test */
     public function can_get_breakdown_price_inc()
     {
-        Config::set('lunar.pricing.stored_inclusive_of_tax', true);
+        Config::set('headless-ecom.pricing.stored_inclusive_of_tax', true);
 
         $address = Address::factory()->create();
         $currency = Currency::factory()->create();

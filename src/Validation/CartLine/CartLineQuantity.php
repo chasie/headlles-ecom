@@ -16,7 +16,7 @@ class CartLineQuantity extends BaseValidator
         if ($quantity < 1) {
             $this->fail(
                 'cart',
-                __('headless-ecom::exceptions.invalid_cart_line_quantity', [
+                __('headless-ecom::exceptions/cart.cart_line_quantity-invalid', [
                     'quantity' => $quantity,
                 ])
             );
@@ -25,7 +25,7 @@ class CartLineQuantity extends BaseValidator
         if ($quantity > 1000000) {
             $this->fail(
                 'cart',
-                __('headless-ecom::exceptions.maximum_cart_line_quantity', [
+                __('headless-ecom::exceptions/cart.cart_line_quantity-maximum', [
                     'quantity' => 1000000,
                 ])
             );

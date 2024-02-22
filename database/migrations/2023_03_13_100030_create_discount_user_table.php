@@ -6,7 +6,7 @@ use HeadlessEcom\Base\Migration;
 
 class CreateDiscountUserTable extends Migration
 {
-    public function up(): void
+    public function up()
     {
         Schema::create($this->prefix.'discount_user', function (Blueprint $table) {
             $table->id();
@@ -16,7 +16,7 @@ class CreateDiscountUserTable extends Migration
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists($this->prefix.'discount_user');
     }

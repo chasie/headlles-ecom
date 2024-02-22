@@ -13,13 +13,15 @@ class CreateCollectionProductTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'collection_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('collection_id')->constrained($this->prefix.'collections');
-            $table->foreignId('product_id')->constrained($this->prefix.'products');
-            $table->integer('position')->default(1)->index();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'collection_product')) {
+            Schema::create($this->prefix.'collection_product', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('collection_id')->constrained($this->prefix.'collections');
+                $table->foreignId('product_id')->constrained($this->prefix.'products');
+                $table->integer('position')->default(1)->index();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

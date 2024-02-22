@@ -16,7 +16,7 @@ use HeadlessEcom\Pipelines\Order\Creation\CreateShippingLine;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.orders.pipelines
+ * @group headless-ecom.orders.pipelines
  */
 class CreateShippingLineTest extends TestCase
 {

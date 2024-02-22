@@ -11,7 +11,7 @@ use HeadlessEcom\Models\ProductVariant;
 use HeadlessEcom\Tests\TestCase;
 
 /**
- * @group lunar.traits.cache
+ * @group headless-ecom.traits.cache
  */
 class CachesPropertiesTest extends TestCase
 {

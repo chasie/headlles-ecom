@@ -73,9 +73,11 @@ class AddressDataTest extends TestCase
             ], 200);
         });
 
-        $this->artisan('lunar:import:address-data');
+        $this->artisan('headless-ecom:import:address-data');
 
-        $this->assertDatabaseHas('lunar_countries', [
+        $prefix = config('headless-ecom.database.table_prefix');
+
+        $this->assertDatabaseHas("{$prefix}countries", [
             'name' => 'United Kingdom',
             'iso3' => 'GBR',
             'iso2' => 'GB',

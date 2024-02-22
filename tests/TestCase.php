@@ -21,12 +21,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
         // additional setup
         Config::set('providers.users.model', User::class);
-        Config::set('lunar.urls.generator', TestUrlGenerator::class);
-        Config::set('lunar.taxes.driver', 'test');
+        Config::set('headless-ecom.urls.generator', TestUrlGenerator::class);
+        Config::set('headless-ecom.taxes.driver', 'test');
+//        Config::set('scout.prefix', config('headless-ecom.database.table_prefix'));
 
-        Taxes::extend('test', function ($app) {
-            return $app->make(TestTaxDriver::class);
-        });
+        Taxes::extend(
+            'test',
+            function ($app)
+            {
+                return $app->make(TestTaxDriver::class);
+            }
+        );
 
         activity()->disableLogging();
 
@@ -34,7 +39,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->freezeTime();
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             HeadlessEcomServiceProvider::class,
@@ -56,8 +61,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
      *
      * @return void
      */
-    protected function defineDatabaseMigrations()
+    protected function defineDatabaseMigrations(): void
     {
         $this->loadLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->artisan('migrate')->run();
     }
 }

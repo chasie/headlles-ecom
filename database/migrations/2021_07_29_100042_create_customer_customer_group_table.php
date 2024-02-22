@@ -13,12 +13,14 @@ class CreateCustomerCustomerGroupTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'customer_customer_group', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_id')->constrained($this->prefix.'customers');
-            $table->foreignId('customer_group_id')->constrained($this->prefix.'customer_groups');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'customer_customer_group')) {
+            Schema::create($this->prefix.'customer_customer_group', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('customer_id')->constrained($this->prefix.'customers');
+                $table->foreignId('customer_group_id')->constrained($this->prefix.'customer_groups');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

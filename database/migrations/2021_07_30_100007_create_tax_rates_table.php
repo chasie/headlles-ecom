@@ -13,13 +13,15 @@ class CreateTaxRatesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->prefix.'tax_rates', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tax_zone_id')->nullable()->constrained($this->prefix.'tax_zones');
-            $table->tinyInteger('priority')->default(1)->index()->unsigned();
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable($this->prefix.'tax_rates')) {
+            Schema::create($this->prefix.'tax_rates', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('tax_zone_id')->nullable()->constrained($this->prefix.'tax_zones');
+                $table->tinyInteger('priority')->default(1)->index()->unsigned();
+                $table->string('name');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
