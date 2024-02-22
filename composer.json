@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Chasie\\HeadlesEcom\\HeadlesEcomServiceProvider"
+                "HeadlessEcom\\HeadlesEcomServiceProvider"
             ],
             "aliases": {
-                "HeadlesEcom": "Chasie\\HeadlesEcom\\HeadlesEcomFacade"
+                "HeadlesEcom": "HeadlessEcom\\HeadlesEcomFacade"
             }
         }
     }
